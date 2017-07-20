@@ -12,8 +12,10 @@
 This will install both run-time project dependencies and developer tools listed
 in [package.json](../package.json) file.
 
-#### 2. Run `npm run enjoy`
+#### 2. Run `npm start`
 
-Note that the `npm run enjoy` command build the app and launch it in browser.
+Note that the `npm start` command build the app and launch it in browser (localhost:3000).
 
-Unfortunately have no time for tests, better design, responsive/adaptive and some functionality.
+#### 3. Run `npm run lint`
+
+Run eslint
