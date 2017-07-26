@@ -29,7 +29,7 @@ export default class Month extends Component {
 
   getCurrentDate = () => {
     const { year, month } = this.props;
-    return moment().year(year).month(month).date(1);
+    return moment([year, month, 1]);
   }
 
   renderPreviousMonthDays = () => {

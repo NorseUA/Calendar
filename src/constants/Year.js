@@ -1,0 +1,2 @@
+export const SET_NEXT_YEAR = 'SET_NEXT_YEAR';
+export const SET_PREVIOUS_YEAR = 'SET_PREVIOUS_YEAR';

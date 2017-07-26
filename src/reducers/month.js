@@ -1,3 +1,5 @@
+import { SET_NEXT_MONTH, SET_PREVIOUS_MONTH } from '../constants/Month';
+
 const initialState = {
   month: 3,
   weekDayNames: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
@@ -5,9 +7,9 @@ const initialState = {
 
 export default function month(state = initialState, action) {
   switch (action.type) {
-    case 'SET_NEXT_MONTH':
+    case SET_NEXT_MONTH:
       return { ...state, month: action.payload };
-    case 'SET_PREVIOUS_MONTH':
+    case SET_PREVIOUS_MONTH:
       return { ...state, month: action.payload };
     default:
       return state;
