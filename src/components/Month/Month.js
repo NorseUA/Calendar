@@ -8,6 +8,25 @@ export default class Month extends Component {
     console.log('Month');
   }
 
+  setPreviousMonth = () => {
+    const { year, month, setPreviousMonth, setPreviousYear } = this.props;
+    if (month === 0) {
+      setPreviousMonth(11);
+      setPreviousYear(year - 1);
+    } else {
+      setPreviousMonth(month - 1);
+    }
+  }
+  setNextMonth = () => {
+    const { year, month, setNextMonth, setNextYear } = this.props;
+    if (month === 11) {
+      setNextMonth(0);
+      setNextYear(year + 1);
+    } else {
+      setNextMonth(month + 1);
+    }
+  }
+
   getCurrentDate = () => {
     const { year, month } = this.props;
     return moment().year(year).month(month).date(1);
@@ -42,11 +61,15 @@ export default class Month extends Component {
     return weekDayNames.map(item => <div key={year + month + item}> {item} </div>);
   }
 
+
   render() {
     const { month, months } = this.props;
     return (
       <div className={styles.month}>
-        <div className={styles.title}><button> prev </button>{months[month]}<button> next </button></div>
+        <div className={styles.title}>
+          <button onClick={this.setPreviousMonth}> prev </button>
+          {months[month]}
+          <button onClick={this.setNextMonth}> next </button></div>
         <div className={styles.weekday}> {this.renderWeekDay()} </div>
         <div className={styles.day}>
           {this.renderPreviousMonthDays()}
@@ -63,5 +86,9 @@ Month.propTypes = {
   month: PropTypes.number.isRequired,
   months: PropTypes.array.isRequired,
   year: PropTypes.number.isRequired,
-  weekDayNames: PropTypes.array.isRequired
+  weekDayNames: PropTypes.array.isRequired,
+  setNextMonth: PropTypes.func.isRequired,
+  setPreviousMonth: PropTypes.func.isRequired,
+  setNextYear: PropTypes.func.isRequired,
+  setPreviousYear: PropTypes.func.isRequired
 };
