@@ -1,23 +1,37 @@
 import React, { PropTypes, Component } from 'react';
-
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import * as styles from './Year.scss';
 
-export default class Year extends Component {
+class Year extends Component {
   componentDidMount() {
     console.log('year');
   }
   setPreviousYear = () => {
-    const { year, setPreviousYear } = this.props;
-    setPreviousYear(year - 1);
+    const { year, setYear } = this.props;
+    setYear(year - 1);
   }
   setNextYear = () => {
-    const { year, setNextYear } = this.props;
-    setNextYear(year + 1);
+    const { year, setYear } = this.props;
+    setYear(year + 1);
+  }
+  setMonth = (item, index) => {
+    const { setMonth, history } = this.props;
+    setMonth(index);
+    history.push(item);
   }
   getMonths = () => {
     const { months, year } = this.props;
-    return months.map(item =>
-      <div className={styles.month} key={item + year}>{item}</div>);
+    return months.map((item, index) => (
+      <Link
+        to={{ pathname: `/${item}` }}
+        className={styles.month}
+        key={item + year}
+        onClick={() => this.setMonth(item, index)}
+      >
+        {item}
+      </Link>
+    ));
   }
   render() {
     const { year } = this.props;
@@ -38,6 +52,15 @@ export default class Year extends Component {
 Year.propTypes = {
   year: PropTypes.number.isRequired,
   months: PropTypes.array.isRequired,
-  setNextYear: PropTypes.func.isRequired,
-  setPreviousYear: PropTypes.func.isRequired
+  setYear: PropTypes.func.isRequired,
+  setMonth: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
+
+const mapStateToProps = (state, ownProps) => {
+  console.log('year', ownProps);
+  return {
+    year: ownProps.year
+  };
+};
+export default connect(mapStateToProps)(Year);

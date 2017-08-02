@@ -4,7 +4,8 @@
 
 .day{
     max-width: 320px;
-    margin: 0 auto;
+    margin: 50% auto;
+    transform: translateY(-50%);
 }
 
 .title{
@@ -13,9 +14,38 @@
     font-size: 16px;
     font-weight: bold;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+    .returnButton{
+        background: transparent;
+        border: 1px solid #ffdd00;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .addButton{
+        background: transparent;
+        border: 1px solid #ffdd00;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
+.footer{
+    margin-bottom: 10px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
     button{
         padding: 5px 20px;
+        min-width: 90px;
         border: 1px solid transparent;
         border-radius: 3px;
         background: #555;
@@ -25,4 +55,17 @@
             background: #000;
         }
     }
+}
+
+.events{
+    padding: 7px;
+    border-bottom: 1px solid #ccc;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+}
+
+.eventsWrapper{
+    max-height: 280px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
 }

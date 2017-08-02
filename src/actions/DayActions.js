@@ -1,15 +1,14 @@
-import { SET_NEXT_DAY, SET_PREVIOUS_DAY } from '../constants/Day';
+import SET_DAY from '../constants/Day';
 
-export function setNextDay(day) {
+export function setDay(day) {
   return {
-    type: SET_NEXT_DAY,
+    type: SET_DAY,
     payload: day
   };
 }
-
-export function setPreviousDay(day) {
+export function setNextDay(day) {
   return {
-    type: SET_PREVIOUS_DAY,
+    type: SET_DAY,
     payload: day
   };
 }
