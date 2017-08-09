@@ -3,19 +3,29 @@
 }
 
 .year{
-    max-width: 320px;
-    margin: 50% auto;
+    max-width: 1400px;
+    min-width: 320px;
+    margin: 0 auto;
     margin-bottom: 30px;
-    transform: translateY(-50%);
-}
+    padding-top: 40px;
 
+}
+.yearBody{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+}
 .monthWrapper{
+    max-width: 320px;
+    min-width: 320px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 14px;
+    margin: 10px;
     .month{
         width: 100px;
         margin-right: 5px;
@@ -33,13 +43,16 @@
 }
 
 .title{
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 16px;
     font-weight: bold;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 20px;
     button{
         padding: 5px 20px;
         border: 1px solid transparent;
@@ -51,4 +64,21 @@
             background: #000;
         }
     }
+}
+
+.day{
+    .hasEvent{
+        border: 1px solid red;
+        position: relative;
+        &:before{
+            content:'';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            right: 2px;
+            top: 2px;
+            border-radius: 50%;
+            background: red;
+        }
+    }  
 }

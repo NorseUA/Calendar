@@ -1,32 +1,19 @@
-import { ADD_EVENT, REMOVE_EVENT } from '../constants/Events';
+import moment from 'moment';
+import { ADD_EVENT, REMOVE_EVENT, CHANGE_ID } from '../constants/Events';
 
 const initialState = {
-  events: [{ id: 123, year: 2017, month: 0, day: 1, start: '00:00', end: '01:00' }],
-  eventsMap: {
-    year: {
-      2017: {
-        month: {
-          0: {
-            day: {
-              1: {
-                events: [
-                  { id: 123, start: '00:00', end: '01:00', name: 'dentist' }
-                ]
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  events: [{ date: moment([2017, 5, 5]), id: '15dd', event: { startYear: 2017, startMonth: 5, startDay: 5, startHours: 15, startMinutes: 15, name: 'Hello' } }],
+  eventId: 1
 };
 
 export default function events(state = initialState, action) {
   switch (action.type) {
     case ADD_EVENT:
-      return { ...state, events: events.push(action.payload) };
+      return { ...state, events: action.payload };
     case REMOVE_EVENT:
-      return { ...state, events: events.delete(action.payload) };
+      return { ...state, events: action.payload };
+    case CHANGE_ID:
+      return { ...state, eventId: action.payload };
     default:
       return state;
   }

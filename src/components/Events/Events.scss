@@ -1,0 +1,151 @@
+.eventWrapper{
+    max-width: 960px;
+    margin:0 auto;
+    margin-bottom: 30px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    transform: translateY(50%);
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.startDate, .endDate{
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    & > div{
+        flex: 1 1 auto;
+        margin-right: 3px;
+        margin-bottom: 5px;
+        &:last-child{
+             margin-right: 0;
+        }
+    }
+    select{
+        width: 100%;
+        border: 2px solid #eee;
+        padding: 5px;
+        border-radius: 3px;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 14px;
+        &:focus{
+            outline: 1px solid #ffdd00;
+        }
+         ~div{
+            color: red;
+            padding-left: 5px;
+            font-weight: bold;
+            max-width: 120px;
+        }
+    }
+}
+
+.startTime, .endTime{
+    display: flex;
+    margin-bottom: 10px;
+    & > div{
+        margin-right: 3px;
+    }
+    select{
+        width: 100%;
+        border: 2px solid #eee;
+        padding: 5px;
+        border-radius: 3px;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 14px;
+         &:focus{
+            outline: 1px solid #ffdd00;
+        }
+         ~div{
+            color: red;
+            padding-left: 5px;
+            font-weight: bold;
+        }
+    }
+}
+
+.eventNameInput{
+    margin-bottom: 10px;
+    input{
+        width: 100%;
+        border: 2px solid #eee;
+        padding: 5px;
+        border-radius: 3px;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 14px;
+        &:focus{
+         outline: 1px solid #ffdd00;
+        }
+        ~div{
+            color: red;
+            padding-left: 5px;
+            font-weight: bold;
+        }
+    }
+}
+
+.eventTitle{
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.eventMainTitle{
+    text-transform: uppercase;
+    text-align: center;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.buttonSubmit{
+    padding: 5px 20px;
+    min-width: 100%;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background: #555;
+    color: #ffdd00;
+    cursor: pointer;
+    &:hover{
+       background: #000;
+    }
+}
+
+.buttonPrimary{
+    padding: 5px 20px;
+    min-width: 90px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background: #555;
+    color: #ffdd00;
+    cursor: pointer;
+    &:hover{
+       background: #000;
+    }
+}
+.eventDescription{
+    margin-bottom: 10px;
+    textarea{
+        width: 100%;
+        border: 2px solid #eee;
+        padding: 5px;
+        border-radius: 3px;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 14px;
+        &:focus{
+            outline: 1px solid #ffdd00;
+        }
+    }
+}
+
+.returnButton{
+    background: transparent;
+    border: 1px solid #ffdd00;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}

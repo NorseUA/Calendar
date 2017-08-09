@@ -1,5 +1,6 @@
 // Modules
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
@@ -24,16 +25,14 @@ class App extends Component {
       year: { year },
       month: { month },
       months: { months },
-      events: { events },
       day: { day },
       weekDayNames,
-      ownProps,
       history } = this.props;
+    const { events, eventId } = this.props.events;
     const { setMonth } = this.props.monthActions;
     const { setYear } = this.props.yearActions;
     const { setDay } = this.props.dayActions;
-    const { addEvent, removeEvent } = this.props.eventActions;
-    console.log(ownProps);
+    const { addEvent, removeEvent, changeId } = this.props.eventActions;
     return (
       <div className={styles.app}>
         <Switch>
@@ -47,6 +46,8 @@ class App extends Component {
                 weekDayNames={weekDayNames.weekDayNames}
                 setMonth={setMonth}
                 history={history}
+                day={day}
+                events={events}
               />)}
           />
           <Route
@@ -61,6 +62,7 @@ class App extends Component {
                 weekDayNames={weekDayNames.weekDayNames}
                 setMonth={setMonth}
                 setYear={setYear}
+                events={events}
               />)}
           />
           <Route
@@ -76,6 +78,7 @@ class App extends Component {
                 setMonth={setMonth}
                 setYear={setYear}
                 setDay={setDay}
+                events={events}
               />)}
           />
           <Route
@@ -94,6 +97,8 @@ class App extends Component {
                 setDay={setDay}
                 addEvent={addEvent}
                 removeEvent={removeEvent}
+                changeId={changeId}
+                eventId={eventId}
               />)}
           />
         </Switch>
@@ -112,20 +117,22 @@ App.propTypes = {
   yearActions: PropTypes.object.isRequired,
   dayActions: PropTypes.object.isRequired,
   eventActions: PropTypes.object.isRequired,
-  ownProps: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  events: PropTypes.object.isRequired
+  events: PropTypes.object
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  year: state.year,
-  months: state.months,
-  month: state.month,
-  weekDayNames: state.month,
-  day: state.day,
-  events: state.events,
-  ownProps
-});
+const mapStateToProps = (state, ownProps) => {
+  console.log('AppState', state);
+  return {
+    year: state.year,
+    months: state.months,
+    month: state.month,
+    weekDayNames: state.month,
+    day: state.day,
+    events: state.events,
+    ownProps
+  };
+};
 
 function mapDispatchToProps(dispatch) {
   return {

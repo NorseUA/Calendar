@@ -1,117 +1,47 @@
-import React, { Component, PropTypes } from 'react';
-import { Form, Text, Select } from 'react-form';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Form, Text, Textarea } from 'react-form';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
-// import Select from 'react-select';
-// import 'react-select/dist/react-select.css';
-// import EventSelect from './EventSelect';
-// import { Link } from 'react-router-dom';
+import eventsFormValidation from './eventsFormValidation';
+import { getSelectBlockOptions, renderSelectBlocks } from './renderSelectBlocks';
 
-
-// import * as styles from './Events.scss';
+import * as styles from './Events.scss';
 
 class Event extends Component {
   componentDidMount() {
     console.log('Welcome');
   }
 
-  getCurrentMonthDays = (year, month) => {
-    const currentDate = moment([year, month]);
-    const allDaysInMonth = [];
-    const days = currentDate.daysInMonth();
-    for (let i = 1; i <= days; i++) {
-      allDaysInMonth.push(i);
-    }
-    return allDaysInMonth;
-  };
-
-  getOptions = options => (
-    options.map(item => (
-      {
-        label: item,
-        value: item
-      }
-    )
-    )
-  )
-  getMonths = () => {
-    const { months } = this.props;
-    return months.map((item, index) => (
-      {
-        label: item,
-        value: index
-      }
-    ));
-  }
-  getYears = () => {
-    const { year } = this.props;
-    const years = [];
-    const start = year;
-    for (let i = start; i <= 2030; i++) {
-      years.push(i);
-    }
-    return years;
+  addEvent = (event) => {
+    const { eventId, addEvent, events } = this.props;
+    const { startYear, startMonth, startDay, startHours, startMinutes } = event;
+    const date = moment([startYear, startMonth, startDay, startHours, startMinutes]);
+    events.push({ date, id: eventId, event });
+    addEvent(events);
   }
 
-  getHours = () => {
-    let hours = moment().startOf('day');
-    const dayHours = [];
-    let time = moment(hours).format('HH');
-    for (let i = 0; i < 24; i++) {
-      dayHours.push(time);
-      hours = moment(hours).add(1, 'hour');
-      time = moment(hours).format('HH');
-    }
-    return dayHours;
-  }
-
-  getMinutes = () => {
-    let minutes = moment().startOf('hour');
-    const hourMinutes = [];
-    let time = moment(minutes).format('mm');
-    for (let i = 0; i < 60; i++) {
-      hourMinutes.push(time);
-      minutes = moment(minutes).add(1, 'minutes');
-      time = moment(minutes).format('mm');
-    }
-    return hourMinutes;
-  }
-
-  fillDays = () => {
-    const days = [];
-    for (let i = 1; i <= 31; i++) {
-      days.push(i);
-    }
-    return days;
+  changeId = (eventId) => {
+    const { changeId } = this.props;
+    eventId += 1;
+    changeId(eventId);
   }
 
   render() {
-    const { months, day, month, year } = this.props;
+    const { months, month, eventId } = this.props;
+    const selectOptins = getSelectBlockOptions();
     return (
-      <div>
+      <div className={styles.eventWrapper}>
         <Form
-          onSubmit={(values, state, props, instance) => {
-            console.log('Values', values);
-            console.log('State', state);
-            console.log('Props', props);
-            console.log('Instance', instance);
+          onSubmit={(values) => {
+            const event = values;
+            event.id = eventId;
+            this.addEvent(event);
+            this.changeId(eventId);
+            history.back();
           }}
-          onChange={(values) => {
-            console.log('Changed', values);
-          }}
-          validate={(values) => {
-            const setDay = values.day;
-            const setMonth = values.month;
-            const setYear = values.year;
-            const days = moment([setYear, setMonth]).daysInMonth();
-            console.log('dayyssss', days);
-            return {
-              day:
-              (setDay > days) ?
-                `there are only ${days} days in ${months[setMonth]}` : null
-            };
-          }
-          }
+          validate={values => eventsFormValidation(values, months)}
         >
           {({
             submitForm,
@@ -120,47 +50,31 @@ class Event extends Component {
             (
               <form onSubmit={submitForm}>
                 <div>
-                  <h6>Event name</h6>
-                  <Text
-                    field="name"
-                    placeholder="Enter event name"
-                  />
-                </div>
-                <div>
-                  <h6>Start</h6>
-                  <Select
-                    field="day"
-                    options={this.getOptions(this.fillDays())}
-                    placeholder="Day"
-                    value={day}
-                  />
-                  <Select
-                    field="month"
-                    options={this.getMonths()}
-                    placeholder="Month"
-                    value={month}
-                  />
-                  <Select
-                    field="year"
-                    options={this.getOptions(this.getYears())}
-                    placeholder="Year"
-                    value={year}
-                  />
-                  <Select
-                    field="hours"
-                    options={this.getOptions(this.getHours())}
-                    placeholder="Hours"
-                  />
-                  <Select
-                    field="minutes"
-                    options={this.getOptions(this.getMinutes())}
-                    placeholder="Minutes"
-                  />
-                </div>
-                <button>Submit</button>
-                <button type="button" onClick={resetForm}>
-                  Reset Form
+                  <div className={styles.header}>
+                    <Link to={{ pathname: `/${months[month]}` }}>
+                      <button className={styles.returnButton}> Back </button>
+                    </Link>
+                    <div className={styles.eventMainTitle}>Add new event</div>
+                    <button className={styles.buttonPrimary} type="button" onClick={resetForm}>
+                      Clear
                 </button>
+                  </div>
+                  <div className={styles.eventTitle}>Event name</div>
+                  <div className={styles.eventNameInput}>
+                    <Text
+                      field="name"
+                      placeholder="Enter event name"
+                    />
+                  </div>
+                  {renderSelectBlocks(selectOptins)}
+                  <div className={styles.eventDescription}>
+                    <Textarea
+                      field="description"
+                      placeholder="Event description"
+                    />
+                  </div>
+                </div>
+                <button className={styles.buttonSubmit}>Save</button>
               </form>
             )
           }
@@ -169,25 +83,27 @@ class Event extends Component {
     );
   }
 }
+
+
 Event.propTypes = {
-  year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
   months: PropTypes.array.isRequired,
-  day: PropTypes.number.isRequired
-  // setYear: PropTypes.func.isRequired,
-  // setMonth: PropTypes.func.isRequired,
-  // history: PropTypes.object.isRequired
+  addEvent: PropTypes.func.isRequired,
+  events: PropTypes.array.isRequired,
+  changeId: PropTypes.func.isRequired,
+  eventId: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('event', ownProps);
   const newDay = Number(ownProps.match.params.day);
   const newMonth = state.months.months.find(month => month === ownProps.match.params.month);
   const number = state.months.months.indexOf(newMonth);
   return {
     year: ownProps.year,
     day: newDay,
-    month: number
+    month: number,
+    events: ownProps.events,
+    eventId: ownProps.eventId
   };
 };
 export default connect(mapStateToProps)(Event);

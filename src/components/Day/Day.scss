@@ -3,10 +3,11 @@
 }
 
 .day{
-    max-width: 320px;
-    margin: 50% auto;
-    transform: translateY(-50%);
+    max-width: 960px;
+    transform: translateY(50%);
+    margin: 0 auto;
 }
+
 
 .title{
     margin-bottom: 10px;
@@ -62,10 +63,31 @@
     border-bottom: 1px solid #ccc;
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 16px;
+    display: flex;
 }
 
 .eventsWrapper{
     max-height: 280px;
-    overflow-y: scroll;
+    min-height: 200px;
+    overflow: auto;
     margin-bottom: 10px;
+}
+
+.eventName{
+    text-decoration: none;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    color: #000;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.eventsTitle{
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    color:red;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
 }

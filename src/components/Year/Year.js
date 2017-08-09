@@ -1,7 +1,9 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as styles from './Year.scss';
+import MonthBody from '../Month/MonthBody';
 
 class Year extends Component {
   componentDidMount() {
@@ -21,17 +23,22 @@ class Year extends Component {
     history.push(item);
   }
   getMonths = () => {
-    const { months, year } = this.props;
-    return months.map((item, index) => (
-      <Link
-        to={{ pathname: `/${item}` }}
-        className={styles.month}
-        key={item + year}
-        onClick={() => this.setMonth(item, index)}
-      >
-        {item}
-      </Link>
-    ));
+    const { months } = this.props;
+    return months.map((item, index) => {
+      const { year, weekDayNames, events } = this.props;
+      return (
+        <div className={styles.monthWrapper} key={`${item}+ym`}>
+          <Link
+            to={{ pathname: `/${item}` }}
+            className={styles.title}
+            key={item + year}
+            onClick={() => this.setMonth(item, index)}
+          >
+            {item}
+          </Link>
+          <MonthBody year={year} month={index} months={months} weekDayNames={weekDayNames} events={events} />
+        </div>);
+    });
   }
   render() {
     const { year } = this.props;
@@ -42,7 +49,9 @@ class Year extends Component {
           {year}
           <button onClick={this.setNextYear}> next </button>
         </div>
-        <div className={styles.monthWrapper}>{this.getMonths()}</div>
+        <div className={styles.yearBody}>
+          {this.getMonths()}
+        </div>
       </div>
     );
   }
@@ -54,13 +63,16 @@ Year.propTypes = {
   months: PropTypes.array.isRequired,
   setYear: PropTypes.func.isRequired,
   setMonth: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  weekDayNames: PropTypes.array.isRequired,
+  events: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('year', ownProps);
+  console.log(state);
   return {
-    year: ownProps.year
+    year: ownProps.year,
+    events: ownProps.events
   };
 };
 export default connect(mapStateToProps)(Year);

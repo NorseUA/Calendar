@@ -3,53 +3,136 @@
 }
 
 .month{
-    max-width: 320px;
-    margin: 50% auto;
-    transform: translateY(-50%);
-    margin-bottom: 30px;
-}
-
-.weekDayItem{
-    background: #eee;
-    min-width: 40px;
-    padding: 10px 0;
-    border-radius: 3px;
-    margin-bottom: 3px;
-}
-.monthBody{
-    min-height: 290px;
-}
-.day{
-    display: flex;
-    text-align: center;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 16px;
-    .normal, .disabled{
-        margin-right: 5px;
-        margin-bottom: 3px;
-        border: 1px solid #ccc;
-        min-width: 40px;
-        border-radius: 3px;
+    max-width: 1270px;
+    margin: 30px auto;
+    .weekDayItem{
+        background: #eee;
+        width: calc(14% - 7px);
         padding: 10px 0;
-        text-decoration: none;
-        color: #000;
-        cursor: pointer;
-        &:hover{
-            background: #ffdd00;
-            border: 1px solid #000;
-        }
+        border-radius: 3px;
+        margin-bottom: 7px;
+        margin-right: 7px;
         &:nth-child(7n){
             margin-right: 0;
         }
     }
-    .disabled{
-        opacity: 0.2;
-        text-decoration: none;
-        color: #000;
-    }  
 }
+
+.weekDaysWrapper{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+.monthBody{
+    min-height: 700px;
+    .day{
+        display: flex;
+        text-align: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 16px;
+        .normal, .disabled{
+            margin-right: 7px;
+            margin-bottom: 7px;
+            border: 1px solid #ccc;
+            width: calc(14% - 7px);
+            min-height: 100px;
+            border-radius: 3px;
+            padding: 10px 0;
+            text-decoration: none;
+            color: #000;
+            cursor: pointer;
+            &:hover{
+                background: #ffdd00;
+                border: 1px solid #000;
+            }
+            &:nth-child(7n){
+                margin-right: 0;
+            }
+        }
+        .disabled{
+            opacity: 0.2;
+            text-decoration: none;
+            color: #000;
+        }
+        .hasEvent{
+            border: 1px solid red;
+            position: relative;
+            &:before{
+                content:'';
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                right: 2px;
+                top: 2px;
+                border-radius: 50%;
+                background: red;
+            }
+        }  
+    }
+}
+
+.monthBodyFullView{
+    min-height: 290px;
+    .weekDayItem{
+        background: #eee;
+        min-width: 40px;
+        padding: 10px 0;
+        border-radius: 3px;
+        margin-bottom: 7px;
+}
+    .day{
+        display: flex;
+        text-align: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 16px;
+        .normal, .disabled{
+            margin-right: 5px;
+            margin-bottom: 3px;
+            border: 1px solid #ccc;
+            min-width: 40px;
+            border-radius: 3px;
+            padding: 10px 0;
+            text-decoration: none;
+            color: #000;
+            cursor: pointer;
+            &:hover{
+                background: #ffdd00;
+                border: 1px solid #000;
+            }
+            &:nth-child(7n){
+                margin-right: 0;
+            }
+        }
+        .disabled{
+            opacity: 0.2;
+            text-decoration: none;
+            color: #000;
+        }
+        .hasEvent{
+            border: 1px solid red;
+            position: relative;
+            &:before{
+                content:'';
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                right: 2px;
+                top: 2px;
+                border-radius: 50%;
+                background: red;
+            }
+        }  
+    }
+}
+ .dayEvents{
+    text-align: left;
+    padding: 5px;
+}
+
 
 .title{
     margin-bottom: 10px;
@@ -94,6 +177,30 @@
         cursor: pointer;
         &:hover{
             background: #000;
+        }
+    }
+}
+.monthTitle{
+    display: flex;
+    justify-content: center; 
+    .monthTitleMonth{
+        margin-right: 5px;
+    }   
+}
+
+@media(max-width:840px){
+    .monthTitleMonth{
+        display: none;
+    }
+    .dayEvents{
+       display: none; 
+    }
+    .monthBody{
+        min-height: 330px;
+        .day{
+            .normal, .disabled{
+                min-height: 40px;
+            }
         }
     }
 }
