@@ -109,7 +109,7 @@ const getDayEvents = (year, month, day, events) => {
 };
 
 const compareEventTime = (a, b) => {
-  a.date.isAfter(b.date);
+  moment(a.date).isAfter(moment(b.date));
 };
 
 const dayIsToday = (year, month, day) => {

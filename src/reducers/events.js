@@ -13,8 +13,12 @@ export default function events(state = initialState, action) {
       newEvents.push(action.payload);
       return { ...state, events: newEvents };
     }
-    case REMOVE_EVENT:
-      return { ...state, events: action.payload };
+    case REMOVE_EVENT: {
+      const newEvents = [...state.events];
+      const index = newEvents.findIndex(event => event.id === action.payload);
+      newEvents.splice(index, 1);
+      return { ...state, events: newEvents };
+    }
     case CHANGE_ID:
       return { ...state, eventId: action.payload + 1 };
     case UPDATE_EVENT: {

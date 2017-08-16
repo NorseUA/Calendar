@@ -72,3 +72,11 @@ export const formOnSubmit = (values, events, id, updateEvent, addEvent, eventId,
     updateGivenEvent(values, id, updateEvent) :
     addNewEvent(values, addEvent, eventId, changeId);
 };
+
+export const deleteEvent = (id, removeEvent) => {
+  const ok = confirm('Are you sure?');
+  if (ok) {
+    removeEvent(id);
+    history.back();
+  }
+};

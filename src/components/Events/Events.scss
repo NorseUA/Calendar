@@ -113,9 +113,13 @@
     &:hover{
        background: #000;
     }
+    &:disabled{
+        background: #999; 
+        cursor: no-drop;
+    }
 }
 
-.buttonPrimary{
+.buttonPrimary, .buttonUpdate{
     padding: 5px 20px;
     min-width: 90px;
     border: 1px solid transparent;
@@ -123,8 +127,13 @@
     background: #555;
     color: #ffdd00;
     cursor: pointer;
+    outline: none;
     &:hover{
        background: #000;
+    }
+    &:disabled{
+        background: #999; 
+        cursor: no-drop;
     }
 }
 .eventDescription{
@@ -139,6 +148,32 @@
         &:focus{
             outline: 1px solid #ffdd00;
         }
+    }
+}
+
+.buttonHidden{
+    display: none;
+}
+.buttonUpdate{
+    min-width: calc(50%  - 5px);
+    margin-right: 5px;
+}
+.buttonDelete{
+    padding: 5px 20px;
+    min-width: calc(50% - 5px);
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background: red;
+    color: #000;
+    outline: none;
+    margin-left: 5px;
+    cursor: pointer;
+    &:hover{
+       background: pink;
+    }
+    &:disabled{
+        background: #999; 
+        cursor: no-drop;
     }
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import eventsFormValidation from './helpers/eventsFormValidation';
@@ -9,7 +10,8 @@ import NameInput from './helpers/NameInput';
 import {
   getEventValues,
   returnToPreviousPage,
-  formOnSubmit
+  formOnSubmit,
+  deleteEvent
 } from './helpers/eventsHelpers';
 import * as styles from './Events.scss';
 import * as eventActions from '../../actions/EventActions';
@@ -22,8 +24,10 @@ class Event extends Component {
   }
 
   render() {
-    const { pageName, resetName, submitName, events, id, eventId } = this.props;
-    const { addEvent, updateEvent, changeId } = this.props.eventActions;
+    const { pageName, resetName, submitName, events, id, eventId, reset, submitting, pristine } = this.props;
+    const { addEvent, updateEvent, removeEvent, changeId } = this.props.eventActions;
+    console.log('updateEvent', updateEvent);
+    console.log('id', id);
     const selectOptins = getSelectBlockOptions();
     return (
       <div className={styles.eventWrapper}>
@@ -35,7 +39,7 @@ class Event extends Component {
             <div className={styles.header}>
               <button className={styles.returnButton} onClick={returnToPreviousPage}> Back </button>
               <div className={styles.eventMainTitle}>{pageName}</div>
-              <button className={styles.buttonPrimary} type="button" onClick={this.props.reset} >
+              <button className={styles.buttonPrimary} type="button" onClick={reset} disabled={pristine || submitting} >
                 {resetName}
               </button>
             </div>
@@ -53,7 +57,8 @@ class Event extends Component {
               <Field name="description" component="textarea" placeholder="Event description" id="description" />
             </div>
           </div>
-          <button className={styles.buttonSubmit} type="submit">{submitName}</button>
+          <button className={cx(id >= 0 ? styles.buttonUpdate : styles.buttonSubmit)} type="submit" disabled={pristine || submitting}>{submitName}</button>
+          <button className={cx(id >= 0 ? styles.buttonDelete : styles.buttonHidden)} type="button" onClick={() => deleteEvent(id, removeEvent)}>delete</button>
         </form >
       </div>
     );
@@ -71,7 +76,9 @@ Event.propTypes = {
   submitName: PropTypes.string,
   eventActions: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func,
-  reset: PropTypes.func
+  reset: PropTypes.func,
+  pristine: PropTypes.bool,
+  submitting: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
