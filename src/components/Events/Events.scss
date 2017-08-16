@@ -35,7 +35,7 @@
         &:focus{
             outline: 1px solid #ffdd00;
         }
-         ~div{
+        ~.error{
             color: red;
             padding-left: 5px;
             font-weight: bold;
@@ -60,7 +60,7 @@
          &:focus{
             outline: 1px solid #ffdd00;
         }
-         ~div{
+         ~.error{
             color: red;
             padding-left: 5px;
             font-weight: bold;
@@ -80,7 +80,7 @@
         &:focus{
          outline: 1px solid #ffdd00;
         }
-        ~div{
+        ~.error{
             color: red;
             padding-left: 5px;
             font-weight: bold;

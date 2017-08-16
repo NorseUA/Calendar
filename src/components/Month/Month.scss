@@ -69,7 +69,13 @@
                 border-radius: 50%;
                 background: red;
             }
-        }  
+        }
+        .currentDay{
+         border: 1px solid red;
+        }
+        .regularDay{
+            background: transparent;
+        }
     }
 }
 
@@ -113,7 +119,6 @@
             color: #000;
         }
         .hasEvent{
-            border: 1px solid red;
             position: relative;
             &:before{
                 content:'';
@@ -125,7 +130,13 @@
                 border-radius: 50%;
                 background: red;
             }
-        }  
+        }
+        .currentDay{
+         border: 1px solid red;
+        }
+        .regularDay{
+            background: transparent;
+        } 
     }
 }
  .dayEvents{

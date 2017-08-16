@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import Year from '../components/Year/Year';
 import Month from '../components/Month/Month';
 import Day from '../components/Day/Day';
@@ -21,84 +22,54 @@ class App extends Component {
   }
 
   render() {
-    const {
-      year: { year },
-      month: { month },
-      months: { months },
-      day: { day },
-      weekDayNames,
-      history } = this.props;
-    const { events, eventId } = this.props.events;
-    const { setMonth } = this.props.monthActions;
-    const { setYear } = this.props.yearActions;
-    const { setDay } = this.props.dayActions;
-    const { addEvent, removeEvent, changeId } = this.props.eventActions;
+    const { year } = this.props;
     return (
       <div className={styles.app}>
+        <Redirect to={`/${year}`} />
         <Switch>
           <Route
-            exact path="/"
-            component={() => (
+            exact path="/:year"
+            render={newYear => (
               <Year
-                year={year}
-                months={months}
-                setYear={setYear}
-                weekDayNames={weekDayNames.weekDayNames}
-                setMonth={setMonth}
-                history={history}
-                day={day}
-                events={events}
+                {...newYear}
               />)}
           />
           <Route
-            exact path="/:month"
+            exact path="/:year/:month"
             render={newMonth => (
               <Month
-                year={year}
                 {...newMonth}
-                month={month}
-                months={months}
-                day={day}
-                weekDayNames={weekDayNames.weekDayNames}
-                setMonth={setMonth}
-                setYear={setYear}
-                events={events}
               />)}
           />
           <Route
-            exact path="/:month/:day"
+            exact path="/:year/:month/:day"
             render={(newDay, newMonth) => (
               <Day
-                year={year}
-                month={month}
-                months={months}
                 {...newDay}
                 {...newMonth}
-                day={day}
-                setMonth={setMonth}
-                setYear={setYear}
-                setDay={setDay}
-                events={events}
               />)}
           />
           <Route
-            exact path="/:month/:day/:event"
+            exact path="/:year/:month/:day/:event"
             render={(newDay, newMonth) => (
               <Event
-                year={year}
-                month={month}
-                months={months}
-                events={events}
                 {...newDay}
                 {...newMonth}
-                day={day}
-                setMonth={setMonth}
-                setYear={setYear}
-                setDay={setDay}
-                addEvent={addEvent}
-                removeEvent={removeEvent}
-                changeId={changeId}
-                eventId={eventId}
+                pageName="add event"
+                resetName="clear"
+                submitName="save"
+              />)}
+          />
+          <Route
+            exact path="/:year/:month/:day/:event/:eventId"
+            render={(newDay, newMonth, id) => (
+              <Event
+                {...newDay}
+                {...newMonth}
+                {...id}
+                pageName="update event"
+                resetName="cancel"
+                submitName="update"
               />)}
           />
         </Switch>
@@ -108,29 +79,15 @@ class App extends Component {
 }
 
 App.propTypes = {
-  year: PropTypes.object.isRequired,
-  months: PropTypes.object.isRequired,
-  month: PropTypes.object.isRequired,
-  day: PropTypes.object.isRequired,
-  weekDayNames: PropTypes.object.isRequired,
-  monthActions: PropTypes.object.isRequired,
-  yearActions: PropTypes.object.isRequired,
-  dayActions: PropTypes.object.isRequired,
-  eventActions: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  events: PropTypes.object
+  year: PropTypes.number.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   console.log('AppState', state);
   return {
-    year: state.year,
-    months: state.months,
-    month: state.month,
-    weekDayNames: state.month,
+    year: state.year.year,
     day: state.day,
-    events: state.events,
-    ownProps
+    events: state.events
   };
 };
 

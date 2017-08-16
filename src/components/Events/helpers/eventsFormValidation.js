@@ -1,6 +1,7 @@
 import moment from 'moment';
+import { months } from '../../../constants';
 
-const eventsFormValidation = (values, months) => {
+const eventsFormValidation = (values) => {
   const errors = {};
   const {
     startDay: chosenStartDay,
@@ -9,11 +10,14 @@ const eventsFormValidation = (values, months) => {
     startMinutes: chosenStartMinutes,
     startHours: chosenStartHours,
     name: chosenEventName } = values;
-  const days = moment([chosenStartYear, chosenStartMonth]).daysInMonth();
+  const year = +chosenStartYear;
+  const month = months.indexOf(chosenStartMonth);
+  const days = moment([year, month]).daysInMonth();
   const dayValidation = (myDay) => {
-    if (myDay) {
-      if (myDay > days) {
-        return `there are only ${days} days in ${months[chosenStartMonth]}`;
+    const day = +myDay;
+    if (day) {
+      if (day > days) {
+        return `there are only ${days} days in ${chosenStartMonth}`;
       }
     } else {
       return 'set day';

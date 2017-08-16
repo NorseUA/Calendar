@@ -1,8 +1,10 @@
 import React from 'react';
+import { v4 } from 'node-uuid';
+import { Field } from 'redux-form';
 import eventsSelectConfig from './eventsSelectConfig';
-import EventsSelect from './EventsSelect';
+import EventSelect from './EventsSelect';
 
-import * as styles from './Events.scss';
+import * as styles from '../Events.scss';
 
 export const getSelectBlockOptions = () => {
   const titles = [];
@@ -11,8 +13,6 @@ export const getSelectBlockOptions = () => {
       const letter = key.match(/['A-Z']/g);
       let title = key.replace(letter[0], ` ${letter[0].toLowerCase()}`);
       title = title[0].toUpperCase() + title.slice(1);
-      console.log(letter);
-      console.log(title);
       titles.push({ fieldName: key, title });
     }
   }
@@ -21,13 +21,13 @@ export const getSelectBlockOptions = () => {
 
 const renderSelectFields = (fieldName) => {
   const eventSelectFieldName = eventsSelectConfig[fieldName] || [];
-  return eventSelectFieldName.map(select =>
-    <div key={`${fieldName}${select.field}`}>
-      {EventsSelect(select.field, select.placeholder, select.options)}
-    </div>);
+  return eventSelectFieldName.map(select => (<div key={v4()}>
+    {<Field field={select.field} options={select.options} name={select.field} component={EventSelect} />}
+  </div>)
+  );
 };
 
-const renderSelectBlock = (fieldName, title, style) => (<div>
+const renderSelectBlock = (fieldName, title, style) => (<div key={v4()}>
   <div className={styles.eventTitle}>{title}</div>
   <div className={styles[style]}>
     {renderSelectFields(fieldName)}

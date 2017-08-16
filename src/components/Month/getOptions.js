@@ -1,32 +1,39 @@
 import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import cx from 'classnames';
+import { v4 } from 'node-uuid';
 import * as styles from './Month.scss';
+import { months, weekDayNames } from '../../constants';
 
-export const setPreviousMonth = (year, setMonth, setYear, history, months, month) => {
+export const setPreviousMonth = (year, setMonth, setYear, month, history) => {
   if (month === 0) {
     setMonth(11);
     setYear(year - 1);
+    year -= 1;
     month = 11;
+    history.replace(`/${year.toString()}/${months[11]}`);
   } else {
     setMonth(month - 1);
     month -= 1;
+    const monthForHistory = months[month];
+    history.push(monthForHistory);
   }
-  const monthForHistory = months[month];
-  history.push(monthForHistory);
 };
 
-export const setNextMonth = (year, setMonth, setYear, history, months, month) => {
+export const setNextMonth = (year, setMonth, setYear, month, history) => {
   if (month === 11) {
     setMonth(0);
     setYear(year + 1);
+    year += 1;
     month = 0;
+    history.replace(`/${year.toString()}/${months[month]}`);
   } else {
     setMonth(month + 1);
     month += 1;
+    const monthForHistory = months[month];
+    history.push(monthForHistory);
   }
-  const monthForHistory = months[month];
-  history.push(monthForHistory);
 };
 
 const getWeekDayOfFirstDayInMonth = (currentDate) => {
@@ -105,26 +112,38 @@ const compareEventTime = (a, b) => {
   a.date.isAfter(b.date);
 };
 
+const dayIsToday = (year, month, day) => {
+  const today = moment().startOf('day');
+  const date = moment([year, month, day]);
+  let style = 'regularDay';
+  if (today.isSame(date)) {
+    style = 'currentDay';
+  }
+  return style;
+};
+
 const renderDayEvents = (year, month, day, events) => {
   const dayEvents = getDayEvents(year, month, day, events) || [];
   const sortedDayEvents = dayEvents.sort(compareEventTime) || [];
   return sortedDayEvents.map((event) => {
     const dayEvent = event.event;
-    const currentEvents = (<div className={styles.dayEvents} key={`d${dayEvent.name}${dayEvent.startMinutes}`}>
+    const currentEvents = (<div className={styles.dayEvents} key={v4()}>
       <div>{`${dayEvent.startHours}:${dayEvent.startMinutes} `}{dayEvent.name}</div></div>);
     return currentEvents;
   });
 };
-const renderFullDay = (year, month, months, day, events, style) => {
+
+const renderFullDay = (year, month, day, events, style) => {
   const hasEvents = dayHasEvents(year, month, day, events);
+  const isToday = dayIsToday(year, month, day);
   return (<Link
-    to={{ pathname: `/${months[month]}/${day}` }}
-    className={hasEvents ? `${styles[style]} ${styles.hasEvent}` : `${styles[style]}`}
-    key={year + (month) + day}
+    to={{ pathname: `/${year}/${months[month]}/${day}` }}
+    className={cx(styles[style], styles[isToday], { [styles.hasEvent]: hasEvents })}
+    key={v4()}
   >
     <div className={styles.dayTitle}>
       <div className={styles.monthTitle}>
-        <div className={styles.monthTitleMonth}>{`${months[month]},`}</div>
+        <div className={styles.monthTitleMonth}>{`${months[month]}, `}</div>
         <div>{day}</div>
       </div>
     </div>
@@ -132,26 +151,27 @@ const renderFullDay = (year, month, months, day, events, style) => {
   </Link>);
 };
 
-const renderDay = (year, month, months, day, events, style) => {
+const renderDay = (year, month, day, events, style) => {
   const hasEvents = dayHasEvents(year, month, day, events);
+  const isToday = dayIsToday(year, month, day);
   return (<Link
-    to={{ pathname: `/${months[month]}/${day}` }}
-    className={hasEvents ? `${styles[style]} ${styles.hasEvent}` : `${styles[style]}`}
-    key={year + (month) + day}
+    to={{ pathname: `/${year}/${months[month]}/${day}` }}
+    className={cx(styles[style], styles[isToday], { [styles.hasEvent]: hasEvents })}
+    key={v4()}
   >
     {day}
   </Link>);
 };
 
-const renderDays = (days, year, month, months, events, style, fullDay) => {
+const renderDays = (days, year, month, events, style, fullDay) => {
   const oneDay = days.map(day => (fullDay ?
-    renderFullDay(year, month, months, day, events, style) :
-    renderDay(year, month, months, day, events, style)
+    renderFullDay(year, month, day, events, style) :
+    renderDay(year, month, day, events, style)
   ));
   return oneDay;
 };
 
-export const renderPreviousMonthDays = (year, month, months, events) => {
+export const renderPreviousMonthDays = (year, month, events) => {
   const currentDate = getCurrentDate(year, month) || {};
   const days = getPreviousMonthDays(currentDate) || [];
   if (month === 0) {
@@ -160,16 +180,16 @@ export const renderPreviousMonthDays = (year, month, months, events) => {
   } else {
     month -= 1;
   }
-  return renderDays(days, year, month, months, events, 'disabled');
+  return renderDays(days, year, month, events, 'disabled');
 };
 
-export const renderCurrentMonthDays = (year, month, months, events) => {
+export const renderCurrentMonthDays = (year, month, events) => {
   const currentDate = getCurrentDate(year, month) || {};
   const days = getCurrentMonthDays(currentDate) || [];
-  return renderDays(days, year, month, months, events, 'normal');
+  return renderDays(days, year, month, events, 'normal');
 };
 
-export const renderNextMonthDays = (year, month, months, events) => {
+export const renderNextMonthDays = (year, month, events) => {
   const currentDate = getCurrentDate(year, month) || {};
   const days = getNextMonthDays(currentDate) || [];
   if (month === 11) {
@@ -178,16 +198,16 @@ export const renderNextMonthDays = (year, month, months, events) => {
   } else {
     month += 1;
   }
-  return renderDays(days, year, month, months, events, 'disabled');
+  return renderDays(days, year, month, events, 'disabled');
 };
 
-export const renderWeekDay = (year, month, weekDayNames) => {
+export const renderWeekDay = () => {
   const weekDays = weekDayNames.map(item =>
-    (<div className={styles.weekDayItem} key={year + month + item}> {item} </div>));
+    (<div className={styles.weekDayItem} key={v4()}> {item} </div>));
   return weekDays;
 };
 
-export const renderPreviousMonthDaysFullView = (year, month, months, events) => {
+export const renderPreviousMonthDaysFullView = (year, month, events) => {
   const currentDate = getCurrentDate(year, month) || {};
   const days = getPreviousMonthDays(currentDate) || [];
   if (month === 0) {
@@ -196,16 +216,16 @@ export const renderPreviousMonthDaysFullView = (year, month, months, events) => 
   } else {
     month -= 1;
   }
-  return renderDays(days, year, month, months, events, 'disabled', true);
+  return renderDays(days, year, month, events, 'disabled', true);
 };
 
-export const renderCurrentMonthDaysFullView = (year, month, months, events) => {
+export const renderCurrentMonthDaysFullView = (year, month, events) => {
   const currentDate = getCurrentDate(year, month) || {};
   const days = getCurrentMonthDays(currentDate) || [];
-  return renderDays(days, year, month, months, events, 'normal', true);
+  return renderDays(days, year, month, events, 'normal', true);
 };
 
-export const renderNextMonthDaysFullView = (year, month, months, events) => {
+export const renderNextMonthDaysFullView = (year, month, events) => {
   const currentDate = getCurrentDate(year, month) || {};
   const days = getNextMonthDays(currentDate) || [];
   if (month === 11) {
@@ -214,5 +234,5 @@ export const renderNextMonthDaysFullView = (year, month, months, events) => {
   } else {
     month += 1;
   }
-  return renderDays(days, year, month, months, events, 'disabled', true);
+  return renderDays(days, year, month, events, 'disabled', true);
 };

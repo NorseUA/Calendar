@@ -8,22 +8,23 @@ import {
   renderWeekDay
 } from './getOptions';
 
+
 export default class MonthBody extends Component {
   componentDidMount() {
     console.log('Month');
   }
 
   render() {
-    const { month, months, year, weekDayNames, events } = this.props;
+    const { month, year, events } = this.props;
     return (
       <div className={styles.monthBodyFullView}>
         <div className={styles.weekDaysWrapper}>
-          {renderWeekDay(year, month, weekDayNames, events)}
+          {renderWeekDay(year, month, events)}
         </div>
         <div className={styles.day}>
-          {renderPreviousMonthDays(year, month, months, events)}
-          {renderCurrentMonthDays(year, month, months, events)}
-          {renderNextMonthDays(year, month, months, events)}
+          {renderPreviousMonthDays(year, month, events)}
+          {renderCurrentMonthDays(year, month, events)}
+          {renderNextMonthDays(year, month, events)}
         </div>
       </div>
     );
@@ -32,8 +33,6 @@ export default class MonthBody extends Component {
 
 MonthBody.propTypes = {
   month: PropTypes.number.isRequired,
-  months: PropTypes.array.isRequired,
   year: PropTypes.number.isRequired,
-  weekDayNames: PropTypes.array.isRequired,
   events: PropTypes.array.isRequired
 };

@@ -2,44 +2,55 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { v4 } from 'node-uuid';
 import * as styles from './Year.scss';
 import MonthBody from '../Month/MonthBody';
+import * as yearActions from '../../actions/YearActions';
+import * as monthActions from '../../actions/MonthActions';
+import { months } from '../../constants';
 
 class Year extends Component {
   componentDidMount() {
     console.log('year');
   }
   setPreviousYear = () => {
-    const { year, setYear } = this.props;
+    const { year, history } = this.props;
+    const { setYear } = this.props.yearActions;
     setYear(year - 1);
+    const yearForHistory = (year - 1).toString();
+    history.push(yearForHistory);
   }
+
   setNextYear = () => {
-    const { year, setYear } = this.props;
+    const { year, history } = this.props;
+    console.log('yearHistory', history);
+    const { setYear } = this.props.yearActions;
     setYear(year + 1);
+    const yearForHistory = (year + 1).toString();
+    history.push(yearForHistory);
   }
+
   setMonth = (item, index) => {
-    const { setMonth, history } = this.props;
+    const { setMonth } = this.props.monthActions;
     setMonth(index);
-    history.push(item);
   }
-  getMonths = () => {
-    const { months } = this.props;
-    return months.map((item, index) => {
-      const { year, weekDayNames, events } = this.props;
-      return (
-        <div className={styles.monthWrapper} key={`${item}+ym`}>
-          <Link
-            to={{ pathname: `/${item}` }}
-            className={styles.title}
-            key={item + year}
-            onClick={() => this.setMonth(item, index)}
-          >
-            {item}
-          </Link>
-          <MonthBody year={year} month={index} months={months} weekDayNames={weekDayNames} events={events} />
-        </div>);
-    });
-  }
+  getMonths = () => months.map((item, index) => {
+    const { year, events } = this.props;
+    return (
+      <div className={styles.monthWrapper} key={v4()}>
+        <Link
+          to={{ pathname: `/${year}/${item}` }}
+          className={styles.title}
+          key={v4()}
+          onClick={() => this.setMonth(item, index)}
+        >
+          {item}
+        </Link>
+        <MonthBody year={year} month={index} events={events} />
+      </div>);
+  });
+
   render() {
     const { year } = this.props;
     return (
@@ -60,19 +71,24 @@ class Year extends Component {
 
 Year.propTypes = {
   year: PropTypes.number.isRequired,
-  months: PropTypes.array.isRequired,
-  setYear: PropTypes.func.isRequired,
-  setMonth: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  weekDayNames: PropTypes.array.isRequired,
-  events: PropTypes.array.isRequired
+  events: PropTypes.array.isRequired,
+  monthActions: PropTypes.object.isRequired,
+  yearActions: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
+  const newYear = Number(ownProps.match.params.year);
   return {
-    year: ownProps.year,
-    events: ownProps.events
+    year: newYear,
+    events: state.events.events
   };
 };
-export default connect(mapStateToProps)(Year);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    yearActions: bindActionCreators(yearActions, dispatch),
+    monthActions: bindActionCreators(monthActions, dispatch)
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Year);

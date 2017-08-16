@@ -1,4 +1,4 @@
-import { ADD_EVENT, REMOVE_EVENT, CHANGE_EVENTS_MAP, CHANGE_ID } from '../constants/Events';
+import { ADD_EVENT, REMOVE_EVENT, UPDATE_EVENT, CHANGE_ID } from '../constants/Events';
 
 export function addEvent(event) {
   return {
@@ -6,16 +6,16 @@ export function addEvent(event) {
     payload: event
   };
 }
-export function removeEvent(event) {
+export function removeEvent(events) {
   return {
     type: REMOVE_EVENT,
-    payload: event
+    payload: events
   };
 }
-export function changeEventsMap(eventsMap) {
+export function updateEvent(event) {
   return {
-    type: CHANGE_EVENTS_MAP,
-    payload: eventsMap
+    type: UPDATE_EVENT,
+    payload: event
   };
 }
 export function changeId(eventId) {

@@ -1,109 +1,105 @@
 import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import { Form, Text, Textarea } from 'react-form';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import eventsFormValidation from './eventsFormValidation';
-import { getSelectBlockOptions, renderSelectBlocks } from './renderSelectBlocks';
-
+import { bindActionCreators } from 'redux';
+import eventsFormValidation from './helpers/eventsFormValidation';
+import { getSelectBlockOptions, renderSelectBlocks } from './helpers/renderSelectBlocks';
+import NameInput from './helpers/NameInput';
+import {
+  getEventValues,
+  returnToPreviousPage,
+  formOnSubmit
+} from './helpers/eventsHelpers';
 import * as styles from './Events.scss';
+import * as eventActions from '../../actions/EventActions';
+import { months } from '../../constants';
+
 
 class Event extends Component {
   componentDidMount() {
     console.log('Welcome');
   }
 
-  addEvent = (event) => {
-    const { eventId, addEvent, events } = this.props;
-    const { startYear, startMonth, startDay, startHours, startMinutes } = event;
-    const date = moment([startYear, startMonth, startDay, startHours, startMinutes]);
-    events.push({ date, id: eventId, event });
-    addEvent(events);
-  }
-
-  changeId = (eventId) => {
-    const { changeId } = this.props;
-    eventId += 1;
-    changeId(eventId);
-  }
-
   render() {
-    const { months, month, eventId } = this.props;
+    const { pageName, resetName, submitName, events, id, eventId } = this.props;
+    const { addEvent, updateEvent, changeId } = this.props.eventActions;
     const selectOptins = getSelectBlockOptions();
     return (
       <div className={styles.eventWrapper}>
-        <Form
-          onSubmit={(values) => {
-            const event = values;
-            event.id = eventId;
-            this.addEvent(event);
-            this.changeId(eventId);
-            history.back();
-          }}
-          validate={values => eventsFormValidation(values, months)}
+        <form
+          onSubmit={this.props.handleSubmit(values =>
+            formOnSubmit(values, events, id, updateEvent, addEvent, eventId, changeId))}
         >
-          {({
-            submitForm,
-            resetForm
-          }) =>
-            (
-              <form onSubmit={submitForm}>
-                <div>
-                  <div className={styles.header}>
-                    <Link to={{ pathname: `/${months[month]}` }}>
-                      <button className={styles.returnButton}> Back </button>
-                    </Link>
-                    <div className={styles.eventMainTitle}>Add new event</div>
-                    <button className={styles.buttonPrimary} type="button" onClick={resetForm}>
-                      Clear
-                </button>
-                  </div>
-                  <div className={styles.eventTitle}>Event name</div>
-                  <div className={styles.eventNameInput}>
-                    <Text
-                      field="name"
-                      placeholder="Enter event name"
-                    />
-                  </div>
-                  {renderSelectBlocks(selectOptins)}
-                  <div className={styles.eventDescription}>
-                    <Textarea
-                      field="description"
-                      placeholder="Event description"
-                    />
-                  </div>
-                </div>
-                <button className={styles.buttonSubmit}>Save</button>
-              </form>
-            )
-          }
-        </Form>
+          <div>
+            <div className={styles.header}>
+              <button className={styles.returnButton} onClick={returnToPreviousPage}> Back </button>
+              <div className={styles.eventMainTitle}>{pageName}</div>
+              <button className={styles.buttonPrimary} type="button" onClick={this.props.reset} >
+                {resetName}
+              </button>
+            </div>
+            <label htmlFor="eventName" className={styles.eventTitle}>Event name</label>
+            <div className={styles.eventNameInput}>
+              <Field
+                name="name"
+                type="text"
+                component={NameInput}
+              />
+            </div>
+            {renderSelectBlocks(selectOptins)}
+            <label htmlFor="description" className={styles.eventTitle}>Description</label>
+            <div className={styles.eventDescription}>
+              <Field name="description" component="textarea" placeholder="Event description" id="description" />
+            </div>
+          </div>
+          <button className={styles.buttonSubmit} type="submit">{submitName}</button>
+        </form >
       </div>
     );
   }
 }
 
-
 Event.propTypes = {
-  month: PropTypes.number.isRequired,
-  months: PropTypes.array.isRequired,
-  addEvent: PropTypes.func.isRequired,
-  events: PropTypes.array.isRequired,
-  changeId: PropTypes.func.isRequired,
-  eventId: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  addEvent: PropTypes.func,
+  events: PropTypes.array,
+  changeId: PropTypes.func,
+  eventId: PropTypes.number,
+  pageName: PropTypes.string,
+  resetName: PropTypes.string,
+  submitName: PropTypes.string,
+  eventActions: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func,
+  reset: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => {
   const newDay = Number(ownProps.match.params.day);
-  const newMonth = state.months.months.find(month => month === ownProps.match.params.month);
-  const number = state.months.months.indexOf(newMonth);
+  const newMonth = months.find(month => month === ownProps.match.params.month);
+  const number = months.indexOf(newMonth);
+  const currentId = Number(ownProps.match.params.eventId);
   return {
-    year: ownProps.year,
+    year: state.year.year,
     day: newDay,
     month: number,
-    events: ownProps.events,
-    eventId: ownProps.eventId
+    id: currentId,
+    events: state.events.events,
+    initialValues: getEventValues(state.events.events, Number(ownProps.match.params.eventId), months),
+    eventId: state.events.eventId
   };
 };
-export default connect(mapStateToProps)(Event);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    eventActions: bindActionCreators(eventActions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(reduxForm({
+  form: 'event',
+  validate: eventsFormValidation
+})(Event));

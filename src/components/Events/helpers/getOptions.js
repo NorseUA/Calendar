@@ -10,29 +10,6 @@ export const getOptions = options => (
   )
 );
 
-export const getMonths = () => {
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'];
-  const options = months.map((item, index) => (
-    {
-      label: item,
-      value: index
-    }
-  ));
-  return options;
-};
-
 export const getYears = () => {
   const years = [];
   const start = moment().year();

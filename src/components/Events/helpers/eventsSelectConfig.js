@@ -1,62 +1,63 @@
-import { getOptions, getMonths, getYears, getHours, getMinutes, fillDays } from './getOptions';
+import { getYears, getHours, getMinutes, fillDays } from './getOptions';
+import { months } from '../../../constants';
 
 const eventsSelectConfig = {
   startDate: [
     {
       field: 'startDay',
-      options: getOptions(fillDays()),
+      options: fillDays(),
       placeholder: 'Day'
     },
     {
       field: 'startMonth',
-      options: getMonths(),
+      options: months,
       placeholder: 'Month'
     },
     {
       field: 'startYear',
-      options: getOptions(getYears()),
+      options: getYears(),
       placeholder: 'Year'
     }
   ],
   startTime: [
     {
       field: 'startHours',
-      options: getOptions(getHours()),
+      options: getHours(),
       placeholder: 'Hours'
     },
     {
       field: 'startMinutes',
-      options: getOptions(getMinutes()),
+      options: getMinutes(),
       placeholder: 'Minutes'
     }
   ],
   endDate: [
     {
       field: 'endDay',
-      options: getOptions(fillDays()),
+      options: fillDays(),
       placeholder: 'Day'
 
     },
     {
       field: 'endMonth',
-      options: getMonths(),
+      options: months,
       placeholder: 'Month'
     },
     {
       field: 'endYear',
-      options: getOptions(getYears()),
+      options: getYears(),
       placeholder: 'Year'
     }
   ],
   endTime: [
     {
       field: 'endHours',
-      options: getOptions(getHours()),
+      options: getHours(),
       placeholder: 'Hours'
     },
     {
       field: 'endMinutes',
-      options: getOptions(getMinutes()),
+      options: getMinutes(),
       placeholder: 'Minutes'
     }
 
