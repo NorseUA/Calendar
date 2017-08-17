@@ -49,34 +49,50 @@ const createNewEvent = (event, id) => {
   return { date, id, event: newEventValues };
 };
 
-const addNewEvent = (event, addEvent, eventId, changeId) => {
+const addNewEvent = (event, addEvent, eventId, changeId, setSaveModalState) => {
   const newEvent = createNewEvent(event, eventId, months);
   addEvent(newEvent);
   changeId(eventId);
-  history.back();
+  setSaveModalState(true);
 };
 
-const updateGivenEvent = (values, id, updateEvent) => {
+const updateGivenEvent = (values, id, updateEvent, setUpdateModalState) => {
   const newEvent = createNewEvent(values, id);
   updateEvent(newEvent);
-  history.back();
+  setUpdateModalState(true);
 };
 
 export const returnToPreviousPage = () => {
   history.back();
 };
 
-export const formOnSubmit = (values, events, id, updateEvent, addEvent, eventId, changeId) => {
+export const formOnSubmit = (values,
+  events,
+  id,
+  updateEvent,
+  addEvent,
+  eventId,
+  changeId,
+  setSaveModalState,
+  setUpdateModalState) => {
   const eventValues = getEventValues(events, id);
   return eventValues ?
-    updateGivenEvent(values, id, updateEvent) :
-    addNewEvent(values, addEvent, eventId, changeId);
+    updateGivenEvent(values, id, updateEvent, setUpdateModalState) :
+    addNewEvent(values, addEvent, eventId, changeId, setSaveModalState);
 };
 
-export const deleteEvent = (id, removeEvent) => {
-  const ok = confirm('Are you sure?');
-  if (ok) {
-    removeEvent(id);
-    history.back();
-  }
+export const deleteEvent = (id, removeEvent, setConfirmModalState) => {
+  removeEvent(id);
+  setConfirmModalState(false);
+  history.back();
+};
+
+export const confirmSavingEvent = (setSaveModalState) => {
+  setSaveModalState(false);
+  history.back();
+};
+
+export const confirmUpdatingEvent = (setUpdateModalState) => {
+  setUpdateModalState(false);
+  history.back();
 };

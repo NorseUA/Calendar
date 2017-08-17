@@ -7,14 +7,19 @@ import { bindActionCreators } from 'redux';
 import eventsFormValidation from './helpers/eventsFormValidation';
 import { getSelectBlockOptions, renderSelectBlocks } from './helpers/renderSelectBlocks';
 import NameInput from './helpers/NameInput';
+import SaveModal from '../Modals/SaveModal';
+import ConfirmModal from '../Modals/ConfirmModal';
 import {
   getEventValues,
   returnToPreviousPage,
   formOnSubmit,
-  deleteEvent
+  deleteEvent,
+  confirmSavingEvent,
+  confirmUpdatingEvent
 } from './helpers/eventsHelpers';
 import * as styles from './Events.scss';
 import * as eventActions from '../../actions/EventActions';
+import * as modalsActions from '../../actions/ModalsActions';
 import { months } from '../../constants';
 
 
@@ -24,16 +29,56 @@ class Event extends Component {
   }
 
   render() {
-    const { pageName, resetName, submitName, events, id, eventId, reset, submitting, pristine } = this.props;
+    const {
+      pageName,
+      resetName,
+      submitName,
+      events,
+      id,
+      eventId,
+      reset,
+      submitting,
+      pristine,
+      confirmIsOpen,
+      saveIsOpen,
+      updateIsOpen
+    } = this.props;
     const { addEvent, updateEvent, removeEvent, changeId } = this.props.eventActions;
-    console.log('updateEvent', updateEvent);
-    console.log('id', id);
+    const { setConfirmModalState, setSaveModalState, setUpdateModalState } = this.props.modalsActions;
     const selectOptins = getSelectBlockOptions();
     return (
       <div className={styles.eventWrapper}>
+        <ConfirmModal
+          isOpen={confirmIsOpen}
+          popupText={'Are you sure?'}
+          closeLable={'Yes'}
+          cancelLable={'Cancel'}
+          handleConfirm={() => deleteEvent(id, removeEvent, setConfirmModalState)}
+          handleCancel={() => setConfirmModalState(false)}
+        />
+        <SaveModal
+          isOpen={saveIsOpen}
+          popupText={'You\'ve succesfully added event'}
+          closeLable={'Ok'}
+          handleConfirm={() => confirmSavingEvent(setSaveModalState)}
+        />
+        <SaveModal
+          isOpen={updateIsOpen}
+          popupText={'You\'ve succesfully updated event'}
+          closeLable={'Ok'}
+          handleConfirm={() => confirmUpdatingEvent(setUpdateModalState)}
+        />
         <form
           onSubmit={this.props.handleSubmit(values =>
-            formOnSubmit(values, events, id, updateEvent, addEvent, eventId, changeId))}
+            formOnSubmit(values,
+              events,
+              id,
+              updateEvent,
+              addEvent,
+              eventId,
+              changeId,
+              setSaveModalState,
+              setUpdateModalState))}
         >
           <div>
             <div className={styles.header}>
@@ -58,7 +103,7 @@ class Event extends Component {
             </div>
           </div>
           <button className={cx(id >= 0 ? styles.buttonUpdate : styles.buttonSubmit)} type="submit" disabled={pristine || submitting}>{submitName}</button>
-          <button className={cx(id >= 0 ? styles.buttonDelete : styles.buttonHidden)} type="button" onClick={() => deleteEvent(id, removeEvent)}>delete</button>
+          <button className={cx(id >= 0 ? styles.buttonDelete : styles.buttonHidden)} type="button" onClick={() => setConfirmModalState(true)}>delete</button>
         </form >
       </div>
     );
@@ -75,10 +120,14 @@ Event.propTypes = {
   resetName: PropTypes.string,
   submitName: PropTypes.string,
   eventActions: PropTypes.object.isRequired,
+  modalsActions: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func,
   reset: PropTypes.func,
   pristine: PropTypes.bool,
-  submitting: PropTypes.bool
+  submitting: PropTypes.bool,
+  confirmIsOpen: PropTypes.bool,
+  saveIsOpen: PropTypes.bool,
+  updateIsOpen: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -93,13 +142,17 @@ const mapStateToProps = (state, ownProps) => {
     id: currentId,
     events: state.events.events,
     initialValues: getEventValues(state.events.events, Number(ownProps.match.params.eventId), months),
-    eventId: state.events.eventId
+    eventId: state.events.eventId,
+    confirmIsOpen: state.confirm.open,
+    saveIsOpen: state.save.open,
+    updateIsOpen: state.update.open
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    eventActions: bindActionCreators(eventActions, dispatch)
+    eventActions: bindActionCreators(eventActions, dispatch),
+    modalsActions: bindActionCreators(modalsActions, dispatch)
   };
 }
 

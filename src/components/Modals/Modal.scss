@@ -1,0 +1,42 @@
+.modal{
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    background: #fff;
+    outline: none;
+    top: 50px;
+    left: 50%;
+    opacity: 1;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 40px;
+}
+
+.modalOverlay{
+    background: #000;
+    opacity: 0.7;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.modalText{
+    margin-bottom: 50px;
+}
+
+.buttonPrimary{
+    padding: 5px 20px;
+    min-width: 90px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background: #555;
+    color: #ffdd00;
+    cursor: pointer;
+    outline: none;
+    margin: 5px;
+    &:hover{
+       background: #000;
+    }
+}
