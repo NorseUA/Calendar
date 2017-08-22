@@ -108,9 +108,7 @@ const getDayEvents = (year, month, day, events) => {
   return false;
 };
 
-const compareEventTime = (a, b) => {
-  moment(a.date).isAfter(moment(b.date));
-};
+const compareEventTime = (a, b) => moment(moment(a.date)).isAfter(moment(moment(b.date)));
 
 const dayIsToday = (year, month, day) => {
   const today = moment().startOf('day');

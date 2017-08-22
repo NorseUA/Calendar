@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as styles from './Month.scss';
 import * as yearActions from '../../actions/YearActions';
 import * as monthActions from '../../actions/MonthActions';
+import * as eventActions from '../../actions/EventActions';
 import {
   renderPreviousMonthDaysFullView,
   renderCurrentMonthDaysFullView,
@@ -17,42 +18,54 @@ import {
 import { months } from '../../constants';
 
 class Month extends Component {
-  componentDidMount() {
-    console.log('Month');
+  componentWillMount() {
+    const { getEvents } = this.props.eventActions;
+    const { events } = this.props;
+    getEvents(events);
   }
 
   render() {
-    const { year, month, day, events, history } = this.props;
+    const { year, month, day, events, history, eventsPending, eventsReceived, eventsError } = this.props;
     const { setMonth } = this.props.monthActions;
     const { setYear } = this.props.yearActions;
     const event = 'event';
-    return (
-      <div className={styles.month}>
-        <div className={styles.title}>
-          <Link to={{ pathname: `/${year}` }}>
-            <button className={styles.returnButton}> Back to year</button>
-          </Link>
-          {months[month]}, {year}
-          <Link to={{ pathname: `/${year}/${months[month]}/${day}/${event}` }}>
-            <button className={styles.addButton}> + </button>
-          </Link>
-        </div>
-        <div className={styles.monthBody}>
-          <div className={styles.weekDaysWrapper}>
-            {renderWeekDay()}
+    if (eventsPending) {
+      return (<div>Loading ...</div>);
+    }
+    if (eventsError) {
+      console.error(eventsError.stack);
+      return (<div>{eventsError.message}</div>);
+    }
+    if (eventsReceived) {
+      return (
+        <div className={styles.month}>
+          <div className={styles.title}>
+            <Link to={{ pathname: `/${year}` }}>
+              <button className={styles.returnButton}> Back to year</button>
+            </Link>
+            {months[month]}, {year}
+            <Link to={{ pathname: `/${year}/${months[month]}/${day}/${event}` }}>
+              <button className={styles.addButton}> + </button>
+            </Link>
           </div>
-          <div className={styles.day}>
-            {renderPreviousMonthDaysFullView(year, month, events)}
-            {renderCurrentMonthDaysFullView(year, month, events)}
-            {renderNextMonthDaysFullView(year, month, events)}
+          <div className={styles.monthBody}>
+            <div className={styles.weekDaysWrapper}>
+              {renderWeekDay()}
+            </div>
+            <div className={styles.day}>
+              {renderPreviousMonthDaysFullView(year, month, events)}
+              {renderCurrentMonthDaysFullView(year, month, events)}
+              {renderNextMonthDaysFullView(year, month, events)}
+            </div>
+          </div>
+          <div className={styles.footer}>
+            <button onClick={() => setPreviousMonth(year, setMonth, setYear, month, history)}> prev </button>
+            <button onClick={() => setNextMonth(year, setMonth, setYear, month, history)}> next </button>
           </div>
         </div>
-        <div className={styles.footer}>
-          <button onClick={() => setPreviousMonth(year, setMonth, setYear, month, history)}> prev </button>
-          <button onClick={() => setNextMonth(year, setMonth, setYear, month, history)}> next </button>
-        </div>
-      </div>
-    );
+      );
+    }
+    return null;
   }
 }
 
@@ -63,24 +76,33 @@ Month.propTypes = {
   monthActions: PropTypes.object.isRequired,
   yearActions: PropTypes.object.isRequired,
   events: PropTypes.array.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  eventActions: PropTypes.object.isRequired,
+  eventsPending: PropTypes.bool,
+  eventsReceived: PropTypes.bool,
+  eventsError: PropTypes.object
 };
 
 const mapStateToProps = (state, ownProps) => {
   const newMonth = months.find(month => month === ownProps.match.params.month);
   const number = months.indexOf(newMonth);
+  const newYear = Number(ownProps.match.params.year);
   return {
-    year: state.year.year,
+    year: newYear,
     month: number,
     day: state.day.day,
-    events: state.events.events
+    events: state.getEvents.events,
+    eventsPending: state.getEvents.pending,
+    eventsReceived: state.getEvents.received,
+    eventsError: state.getEvents.error
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     yearActions: bindActionCreators(yearActions, dispatch),
-    monthActions: bindActionCreators(monthActions, dispatch)
+    monthActions: bindActionCreators(monthActions, dispatch),
+    eventActions: bindActionCreators(eventActions, dispatch)
   };
 }
 

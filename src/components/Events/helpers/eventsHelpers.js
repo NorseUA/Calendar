@@ -28,7 +28,7 @@ export const getEventValues = (events, id) => {
   return null;
 };
 
-const createNewEvent = (event, id) => {
+export const createNewEvent = (event, id) => {
   const { startYear, startMonth, startDay, startHours, startMinutes } = event;
   const month = months.indexOf(startMonth);
   const date = moment([Number(startYear), month, Number(startDay), Number(startHours), Number(startMinutes)]);
@@ -47,52 +47,4 @@ const createNewEvent = (event, id) => {
     description: event.description ? event.description : null
   };
   return { date, id, event: newEventValues };
-};
-
-const addNewEvent = (event, addEvent, eventId, changeId, setSaveModalState) => {
-  const newEvent = createNewEvent(event, eventId, months);
-  addEvent(newEvent);
-  changeId(eventId);
-  setSaveModalState(true);
-};
-
-const updateGivenEvent = (values, id, updateEvent, setUpdateModalState) => {
-  const newEvent = createNewEvent(values, id);
-  updateEvent(newEvent);
-  setUpdateModalState(true);
-};
-
-export const returnToPreviousPage = () => {
-  history.back();
-};
-
-export const formOnSubmit = (values,
-  events,
-  id,
-  updateEvent,
-  addEvent,
-  eventId,
-  changeId,
-  setSaveModalState,
-  setUpdateModalState) => {
-  const eventValues = getEventValues(events, id);
-  return eventValues ?
-    updateGivenEvent(values, id, updateEvent, setUpdateModalState) :
-    addNewEvent(values, addEvent, eventId, changeId, setSaveModalState);
-};
-
-export const deleteEvent = (id, removeEvent, setConfirmModalState) => {
-  removeEvent(id);
-  setConfirmModalState(false);
-  history.back();
-};
-
-export const confirmSavingEvent = (setSaveModalState) => {
-  setSaveModalState(false);
-  history.back();
-};
-
-export const confirmUpdatingEvent = (setUpdateModalState) => {
-  setUpdateModalState(false);
-  history.back();
 };

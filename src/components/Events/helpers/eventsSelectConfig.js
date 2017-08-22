@@ -60,7 +60,6 @@ const eventsSelectConfig = {
       options: getMinutes(),
       placeholder: 'Minutes'
     }
-
   ]
 };
 

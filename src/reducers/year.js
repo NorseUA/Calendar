@@ -1,7 +1,8 @@
+import moment from 'moment';
 import SET_YEAR from '../constants/Year';
 
 const initialState = {
-  year: 2017
+  year: moment().year()
 };
 
 export default function year(state = initialState, action) {

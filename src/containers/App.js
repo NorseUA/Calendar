@@ -18,78 +18,72 @@ import * as styles from './App.scss';
 
 class App extends Component {
   componentDidMount() {
-    console.log('Welcome');
+    console.log('Year');
   }
 
   render() {
     const { year } = this.props;
-    return (
-      <div className={styles.app}>
-        <Redirect to={`/${year}`} />
-        <Switch>
-          <Route
-            exact path="/:year"
-            render={newYear => (
-              <Year
-                {...newYear}
-              />)}
-          />
-          <Route
-            exact path="/:year/:month"
-            render={newMonth => (
-              <Month
-                {...newMonth}
-              />)}
-          />
-          <Route
-            exact path="/:year/:month/:day"
-            render={(newDay, newMonth) => (
-              <Day
-                {...newDay}
-                {...newMonth}
-              />)}
-          />
-          <Route
-            exact path="/:year/:month/:day/:event"
-            render={(newDay, newMonth) => (
-              <Event
-                {...newDay}
-                {...newMonth}
-                pageName="add event"
-                resetName="clear"
-                submitName="save"
-              />)}
-          />
-          <Route
-            exact path="/:year/:month/:day/:event/:eventId"
-            render={(newDay, newMonth, id) => (
-              <Event
-                {...newDay}
-                {...newMonth}
-                {...id}
-                pageName="update event"
-                resetName="cancel"
-                submitName="update"
-              />)}
-          />
-        </Switch>
-      </div>
+    return (<div className={styles.app}>
+      <Redirect to={`/${year}`} />
+      <Switch>
+        <Route
+          exact path="/:year"
+          render={newYear => (
+            <Year
+              {...newYear}
+            />)}
+        />
+        <Route
+          exact path="/:year/:month"
+          render={(newMonth, newYear) => (
+            <Month
+              {...newMonth}
+              {...newYear}
+            />)}
+        />
+        <Route
+          exact path="/:year/:month/:day"
+          render={(newDay, newMonth) => (
+            <Day
+              {...newDay}
+              {...newMonth}
+            />)}
+        />
+        <Route
+          exact path="/:year/:month/:day/:event"
+          render={(newDay, newMonth) => (
+            <Event
+              {...newDay}
+              {...newMonth}
+              pageName="add event"
+              resetName="clear"
+              submitName="save"
+            />)}
+        />
+        <Route
+          exact path="/:year/:month/:day/:event/:eventId"
+          render={(newDay, newMonth, id) => (
+            <Event
+              {...newDay}
+              {...newMonth}
+              {...id}
+              pageName="update event"
+              resetName="cancel"
+              submitName="update"
+            />)}
+        />
+      </Switch>
+    </div>
     );
   }
 }
 
 App.propTypes = {
-  year: PropTypes.number.isRequired
+  year: PropTypes.number
 };
 
-const mapStateToProps = (state) => {
-  console.log('AppState', state);
-  return {
-    year: state.year.year,
-    day: state.day,
-    events: state.events
-  };
-};
+const mapStateToProps = state => ({ year: state.year.year });
+
 
 function mapDispatchToProps(dispatch) {
   return {

@@ -1,13 +1,6 @@
 import SET_YEAR from '../constants/Year';
 
-export function setYear(year) {
-  return {
-    type: SET_YEAR,
-    payload: year
-  };
-}
-
-export function setNextYear(year) {
+export function setYear(year) { // eslint-disable-line
   return {
     type: SET_YEAR,
     payload: year

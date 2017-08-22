@@ -9,51 +9,64 @@ import renderDayBody from './renderDayBody';
 import * as monthActions from '../../actions/MonthActions';
 import * as yearActions from '../../actions/YearActions';
 import * as dayActions from '../../actions/DayActions';
+import * as eventActions from '../../actions/EventActions';
 import { months } from '../../constants';
 
 class Day extends Component {
-  componentDidMount() {
-    console.log('Day');
+  componentWillMount() {
+    const { getEvents } = this.props.eventActions;
+    const { events } = this.props;
+    getEvents(events);
   }
 
   render() {
-    const { year, month, day, events, history } = this.props;
+    const { year, month, day, events, history, eventsPending, eventsReceived, eventsError } = this.props;
     const { setMonth } = this.props.monthActions;
     const { setYear } = this.props.yearActions;
     const { setDay } = this.props.dayActions;
     const event = 'event';
-    return (
-      <div className={styles.day} >
-        <div className={styles.title}>
-          <Link to={{ pathname: `/${year}/${months[month]}` }}>
-            <button onClick={this.returnToMonth} className={styles.returnButton}> Back to month </button>
-          </Link>
-          {getDay(year, month, day)}
-          <Link to={{ pathname: `/${year}/${months[month]}/${day}/${event}` }}>
-            <button className={styles.addButton}> + </button>
-          </Link>
-        </div>
-        <div className={styles.body}>
-          <div className={styles.eventsWrapper}>
-            <div className={styles.eventsTitle}>Your events: </div>
-            {renderDayBody(year, month, day, events)}
-            <div className={styles.eventDescription} />
+    if (eventsPending) {
+      return (<div>Loading ...</div>);
+    }
+    if (eventsError) {
+      console.error(eventsError.stack);
+      return (<div>{eventsError.message}</div>);
+    }
+    if (eventsReceived) {
+      return (
+        <div className={styles.day} >
+          <div className={styles.title}>
+            <Link to={{ pathname: `/${year}/${months[month]}` }}>
+              <button onClick={this.returnToMonth} className={styles.returnButton}> Back to month </button>
+            </Link>
+            {getDay(year, month, day)}
+            <Link to={{ pathname: `/${year}/${months[month]}/${day}/${event}` }}>
+              <button className={styles.addButton}> + </button>
+            </Link>
           </div>
-        </div>
-        <div className={styles.footer}>
-          <button
-            onClick={() => setPreviousDay(year, month, day, history, setDay, setMonth, setYear)}
-          >
-            prev
+          <div className={styles.body}>
+            <div className={styles.eventsWrapper}>
+              <div className={styles.eventsTitle}>Your events: </div>
+              {renderDayBody(year, month, day, events)}
+              <div className={styles.eventDescription} />
+            </div>
+          </div>
+          <div className={styles.footer}>
+            <button
+              onClick={() => setPreviousDay(year, month, day, history, setDay, setMonth, setYear)}
+            >
+              prev
           </button>
-          <button
-            onClick={() => setNextDay(year, month, day, history, setDay, setMonth, setYear)}
-          >
-            next
+            <button
+              onClick={() => setNextDay(year, month, day, history, setDay, setMonth, setYear)}
+            >
+              next
           </button>
-        </div>
-      </div >
-    );
+          </div>
+        </div >
+      );
+    }
+    return null;
   }
 }
 
@@ -65,8 +78,12 @@ Day.propTypes = {
   monthActions: PropTypes.object.isRequired,
   yearActions: PropTypes.object.isRequired,
   dayActions: PropTypes.object.isRequired,
+  eventActions: PropTypes.object.isRequired,
   history: PropTypes.object,
-  events: PropTypes.array.isRequired
+  events: PropTypes.array.isRequired,
+  eventsPending: PropTypes.bool,
+  eventsReceived: PropTypes.bool,
+  eventsError: PropTypes.object
 };
 
 
@@ -74,11 +91,15 @@ const mapStateToProps = (state, ownProps) => {
   const newDay = Number(ownProps.match.params.day);
   const newMonth = months.find(month => month === ownProps.match.params.month);
   const number = months.indexOf(newMonth);
+  const newYear = Number(ownProps.match.params.year);
   return {
-    year: state.year.year,
+    year: newYear,
     day: newDay,
     month: number,
-    events: state.events.events
+    events: state.getEvents.events,
+    eventsPending: state.getEvents.pending,
+    eventsReceived: state.getEvents.received,
+    eventsError: state.getEvents.error
   };
 };
 
@@ -86,7 +107,8 @@ function mapDispatchToProps(dispatch) {
   return {
     yearActions: bindActionCreators(yearActions, dispatch),
     monthActions: bindActionCreators(monthActions, dispatch),
-    dayActions: bindActionCreators(dayActions, dispatch)
+    dayActions: bindActionCreators(dayActions, dispatch),
+    eventActions: bindActionCreators(eventActions, dispatch)
   };
 }
 
