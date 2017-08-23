@@ -54,16 +54,15 @@ class Event extends Component {
 
   addNewEvent = (event) => {
     const { eventId } = this.props;
-    const { addEvent, changeId } = this.props.eventActions;
+    const { addEvent } = this.props.eventActions;
     const newEvent = createNewEvent(event, eventId);
     addEvent(newEvent);
-    changeId(eventId);
   }
 
   updateGivenEvent = (values) => {
     const { id } = this.props;
-    const newEvent = createNewEvent(values, id);
     const { updateEvent } = this.props.eventActions;
+    const newEvent = createNewEvent(values, id);
     updateEvent(newEvent);
   }
 
@@ -198,7 +197,6 @@ Event.propTypes = {
   id: PropTypes.number.isRequired,
   addEvent: PropTypes.func,
   events: PropTypes.array,
-  changeId: PropTypes.func,
   eventId: PropTypes.number,
   pageName: PropTypes.string,
   resetName: PropTypes.string,
@@ -233,20 +231,17 @@ const mapStateToProps = (state, ownProps) => {
     events: state.getEvents.events,
     initialValues: getEventValues(state.getEvents.events, Number(ownProps.match.params.eventId), months),
     eventId: state.getEvents.eventId,
-    confirmIsOpen: state.getEvents.confirmIsOpen,
-    updateIsOpen: state.getEvents.updateIsOpen,
-    saveIsOpen: state.getEvents.saveIsOpen,
-    removeIsOpen: state.getEvents.removeIsOpen,
+    confirmIsOpen: state.confirmModal.confirmIsOpen,
     errorIsOpen: state.getEvents.errorIsOpen,
-    addPending: state.getEvents.addPending,
-    addReceived: state.getEvents.addReceived,
-    addError: state.getEvents.addError,
-    removePending: state.getEvents.removePending,
-    removeReceived: state.getEvents.removeReceived,
-    removeError: state.getEvents.removeError,
-    updatePending: state.getEvents.updatePending,
-    updateReceived: state.getEvents.updateReceived,
-    updateError: state.getEvents.updateError
+    addPending: state.addEvent.pending,
+    addReceived: state.addEvent.received,
+    addError: state.addEvent.error,
+    removePending: state.removeEvent.pending,
+    removeReceived: state.removeEvent.received,
+    removeError: state.removeEvent.error,
+    updatePending: state.updateEvent.pending,
+    updateReceived: state.updateEvent.received,
+    updateError: state.updateEvent.error
   };
 };
 

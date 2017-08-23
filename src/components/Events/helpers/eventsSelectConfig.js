@@ -6,59 +6,59 @@ const eventsSelectConfig = {
     {
       field: 'startDay',
       options: fillDays(),
-      placeholder: 'Day'
+      placeholder: 'day'
     },
     {
       field: 'startMonth',
       options: months,
-      placeholder: 'Month'
+      placeholder: 'month'
     },
     {
       field: 'startYear',
       options: getYears(),
-      placeholder: 'Year'
+      placeholder: 'year'
     }
   ],
   startTime: [
     {
       field: 'startHours',
       options: getHours(),
-      placeholder: 'Hours'
+      placeholder: 'hours'
     },
     {
       field: 'startMinutes',
       options: getMinutes(),
-      placeholder: 'Minutes'
+      placeholder: 'minutes'
     }
   ],
   endDate: [
     {
       field: 'endDay',
       options: fillDays(),
-      placeholder: 'Day'
+      placeholder: 'day'
 
     },
     {
       field: 'endMonth',
       options: months,
-      placeholder: 'Month'
+      placeholder: 'month'
     },
     {
       field: 'endYear',
       options: getYears(),
-      placeholder: 'Year'
+      placeholder: 'year'
     }
   ],
   endTime: [
     {
       field: 'endHours',
       options: getHours(),
-      placeholder: 'Hours'
+      placeholder: 'hours'
     },
     {
       field: 'endMinutes',
       options: getMinutes(),
-      placeholder: 'Minutes'
+      placeholder: 'minutes'
     }
   ]
 };

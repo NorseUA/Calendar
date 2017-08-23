@@ -14,7 +14,7 @@ const getLastDayInCurrentMonth = (year, month, day) => {
 };
 
 const getLastDay = (year, month, day) => {
-  const currentDate = moment([year, month, day]);
+  const currentDate = getCurrentDate(year, month, day);
   return currentDate.daysInMonth();
 };
 

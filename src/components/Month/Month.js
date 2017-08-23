@@ -18,7 +18,7 @@ import {
 import { months } from '../../constants';
 
 class Month extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { getEvents } = this.props.eventActions;
     const { events } = this.props;
     getEvents(events);
@@ -70,7 +70,7 @@ class Month extends Component {
 }
 
 Month.propTypes = {
-  month: PropTypes.number.isRequired || PropTypes.string.isRequired,
+  month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
   day: PropTypes.number.isRequired,
   monthActions: PropTypes.object.isRequired,

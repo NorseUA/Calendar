@@ -13,7 +13,7 @@ import * as eventActions from '../../actions/EventActions';
 import { months } from '../../constants';
 
 class Day extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { getEvents } = this.props.eventActions;
     const { events } = this.props;
     getEvents(events);

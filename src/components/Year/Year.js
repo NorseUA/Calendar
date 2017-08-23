@@ -94,6 +94,7 @@ Year.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state);
   const newYear = Number(ownProps.match.params.year);
   return {
     year: newYear,

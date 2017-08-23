@@ -22,7 +22,7 @@ export const getSelectBlockOptions = () => {
 const renderSelectFields = (fieldName) => {
   const eventSelectFieldName = eventsSelectConfig[fieldName] || [];
   return eventSelectFieldName.map(select => (<div key={v4()}>
-    {<Field field={select.field} options={select.options} name={select.field} component={EventSelect} />}
+    {<Field placeholder={select.placeholder} options={select.options} name={select.field} component={EventSelect} />}
   </div>)
   );
 };

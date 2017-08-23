@@ -3,9 +3,9 @@ import { v4 } from 'node-uuid';
 import PropTypes from 'prop-types';
 import * as styles from '../Events.scss';
 
-const EventSelect = ({ input, field, options, meta: { touched, error } }) => (<div>
+const EventSelect = ({ input, placeholder, options, meta: { touched, error } }) => (<div>
   <select {...input}>
-    <option value="">Select {`${field}`}</option>
+    <option value="">Select {`${placeholder}`}</option>
     {options.map(selectOption =>
       <option value={selectOption} key={v4()}>
         {selectOption}
@@ -24,7 +24,7 @@ export default EventSelect;
 
 EventSelect.propTypes = {
   meta: PropTypes.object.isRequired,
-  field: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
   input: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired
 };
