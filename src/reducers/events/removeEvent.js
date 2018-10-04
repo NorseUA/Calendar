@@ -11,7 +11,7 @@ const initialState = {
   error: null
 };
 
-export default function removeEvent(state = initialState, action) {
+export default function removeEvent(state = initialState, action = {}) {
   switch (action.type) {
     case REMOVE_EVENT_PENDING: {
       return {

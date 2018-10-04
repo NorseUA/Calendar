@@ -1,9 +1,6 @@
-import { SET_MONTH } from '../constants/Month';
+import SET_MONTH from '../constants/Month';
 
-const initialState = {
-};
-
-export default function month(state = initialState, action) {
+export default function month(state = {}, action = {}) {
   switch (action.type) {
     case SET_MONTH:
       return { ...state, month: action.payload };

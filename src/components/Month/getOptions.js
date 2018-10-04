@@ -76,8 +76,8 @@ export const getNextMonthDays = (currentDate) => {
 
 
 export const getCurrentDate = (year, month) => {
-  const currenntDate = moment([year, month, 1]);
-  return currenntDate;
+  const currentDate = moment([year, month, 1]);
+  return currentDate;
 };
 
 
@@ -120,7 +120,7 @@ const dayIsToday = (year, month, day) => {
   return style;
 };
 
-const renderDayEvents = (year, month, day, events) => {
+export const renderDayEvents = (year, month, day, events) => {
   const dayEvents = getDayEvents(year, month, day, events) || [];
   const sortedDayEvents = dayEvents.sort(compareEventTime) || [];
   return sortedDayEvents.map((event) => {
@@ -131,7 +131,7 @@ const renderDayEvents = (year, month, day, events) => {
   });
 };
 
-const renderFullDay = (year, month, day, events, style) => {
+export const renderFullDay = (year, month, day, events, style) => {
   const hasEvents = dayHasEvents(year, month, day, events);
   const isToday = dayIsToday(year, month, day);
   return (<Link
@@ -149,7 +149,7 @@ const renderFullDay = (year, month, day, events, style) => {
   </Link>);
 };
 
-const renderDay = (year, month, day, events, style) => {
+export const renderDay = (year, month, day, events, style) => {
   const hasEvents = dayHasEvents(year, month, day, events);
   const isToday = dayIsToday(year, month, day);
   return (<Link
@@ -161,7 +161,7 @@ const renderDay = (year, month, day, events, style) => {
   </Link>);
 };
 
-const renderDays = (days, year, month, events, style, fullDay) => {
+export const renderDays = (days, year, month, events, style, fullDay) => {
   const oneDay = days.map(day => (fullDay ?
     renderFullDay(year, month, day, events, style) :
     renderDay(year, month, day, events, style)

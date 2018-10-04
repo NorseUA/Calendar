@@ -32,6 +32,7 @@ export const createNewEvent = (event, id) => {
   const { startYear, startMonth, startDay, startHours, startMinutes } = event;
   const month = months.indexOf(startMonth);
   const date = moment([Number(startYear), month, Number(startDay), Number(startHours), Number(startMinutes)]);
+  console.log('date', date);
   const newEventValues = {
     startYear: Number(startYear),
     startMonth: month,

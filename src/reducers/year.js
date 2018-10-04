@@ -5,7 +5,7 @@ const initialState = {
   year: moment().year()
 };
 
-export default function year(state = initialState, action) {
+export default function year(state = initialState, action = {}) {
   switch (action.type) {
     case SET_YEAR:
       return { ...state, year: action.payload };

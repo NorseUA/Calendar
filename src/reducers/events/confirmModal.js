@@ -4,7 +4,7 @@ const initialState = {
   confirmIsOpen: false
 };
 
-export default function confirmModal(state = initialState, action) {
+export default function confirmModal(state = initialState, action = {}) {
   switch (action.type) {
 
     case SET_CONFIRM_MODAL_STATE:

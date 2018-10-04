@@ -11,18 +11,11 @@ const initialState = {
   eventId: 0,
   pending: false,
   recieved: false,
-  error: null,
-  addReceived: false,
-  addError: null,
-  removeReceived: false,
-  removeError: null,
-  updateReceived: false,
-  updateError: null
+  error: null
 };
 
-export default function getEvents(state = initialState, action) {
+export default function getEvents(state = initialState, action = {}) {
   switch (action.type) {
-
     case GET_EVENTS_PENDING: {
       return {
         ...state,
@@ -35,13 +28,7 @@ export default function getEvents(state = initialState, action) {
         ...state,
         events: action.payload,
         pending: false,
-        received: true,
-        addReceived: false,
-        addError: null,
-        updateReceived: false,
-        updateError: null,
-        removeReceived: false,
-        removeError: null
+        received: true
       };
     }
     case GET_EVENTS_REJECTED: {
@@ -61,7 +48,7 @@ export default function getEvents(state = initialState, action) {
     case UPDATE_GENERAL_EVENTS_ID: {
       return {
         ...state,
-        eventId: action.payload + 1
+        eventId: action.payload
       };
     }
     default:

@@ -12,7 +12,7 @@ import * as dayActions from '../../actions/DayActions';
 import * as eventActions from '../../actions/EventActions';
 import { months } from '../../constants';
 
-class Day extends Component {
+export class Day extends Component {
   componentDidMount() {
     const { getEvents } = this.props.eventActions;
     const { events } = this.props;
@@ -39,7 +39,7 @@ class Day extends Component {
             <Link to={{ pathname: `/${year}/${months[month]}` }}>
               <button onClick={this.returnToMonth} className={styles.returnButton}> Back to month </button>
             </Link>
-            {getDay(year, month, day)}
+            <span>{getDay(year, month, day)}</span>
             <Link to={{ pathname: `/${year}/${months[month]}/${day}/${event}` }}>
               <button className={styles.addButton}> + </button>
             </Link>
@@ -53,11 +53,13 @@ class Day extends Component {
           </div>
           <div className={styles.footer}>
             <button
+              id="dayPrev"
               onClick={() => setPreviousDay(year, month, day, history, setDay, setMonth, setYear)}
             >
               prev
           </button>
             <button
+              id="dayNext"
               onClick={() => setNextDay(year, month, day, history, setDay, setMonth, setYear)}
             >
               next
@@ -72,7 +74,7 @@ class Day extends Component {
 
 
 Day.propTypes = {
-  month: PropTypes.number.isRequired || PropTypes.string.isRequired,
+  month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
   day: PropTypes.number.isRequired,
   monthActions: PropTypes.object.isRequired,

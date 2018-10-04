@@ -2,21 +2,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import Router from '../router';
 // Styles
 import * as styles from './App.scss';
 
-class App extends Component {
-  componentDidMount() {
-    console.log('Year');
-  }
-
+export class App extends Component { //eslint-disable-line
   render() {
     const { year } = this.props;
     return (<div className={styles.app}>
-      <Redirect to={`/${year}`} />
-      <Router />
+      {location.pathname === '/' ?
+        <Redirect to={`/${year}`} /> :
+        <Router />}
     </div>
     );
   }

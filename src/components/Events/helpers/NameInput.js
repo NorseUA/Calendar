@@ -9,7 +9,7 @@ const NameInput = ({
   meta: { touched, error }
 }) => (
   <div>
-    <input {...input} type={type} />
+    <input {...input} type={type} id="nameInput" />
     {touched &&
       ((error &&
         <span className={styles.error}>

@@ -1,38 +1,62 @@
-{ "extends": "airbnb",
+{
+  "extends": "airbnb",
   "env": {
     "es6": true,
     "browser": true,
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "jest": true
   },
   "parser": "babel-eslint",
   "plugins": [
-    "react", "import"
+    "react",
+    "import"
   ],
   "settings": {
     "import/parser": "babel-eslint",
     "import/resolve": {
-      "moduleDirectory": ["node_modules", "src"]
+      "moduleDirectory": [
+        "node_modules",
+        "src"
+      ]
     }
   },
   "rules": {
-    "indent": [2, 2, {"SwitchCase": 1}],
-    "comma-dangle": [2, "never"],
+    "indent": [
+      2,
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "comma-dangle": [
+      2,
+      "never"
+    ],
     "no-console": 0,
-    "max-len": ["error", {
-      "code": 120,
-      "ignoreRegExpLiterals": true,
-      "ignoreTrailingComments": true,
-      "ignoreComments": true,
-      "ignoreStrings": true,
-      "ignoreUrls": true
-    }],
-    "no-confusing-arrow": ["error", {
-      "allowParens": true
-    }],
-    "no-plusplus": ["error", {
-      "allowForLoopAfterthoughts": true
-    }],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreRegExpLiterals": true,
+        "ignoreTrailingComments": true,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreUrls": true
+      }
+    ],
+    "no-confusing-arrow": [
+      "error",
+      {
+        "allowParens": true
+      }
+    ],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
     "react/no-danger": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "react/require-default-props": 0,

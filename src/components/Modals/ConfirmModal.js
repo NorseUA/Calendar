@@ -14,7 +14,7 @@ const ConfirmModal = props => (
     shouldCloseOnOverlayClick
   >
     <div className={styles.modalText}>{props.popupText}</div>
-    <button className={styles.buttonPrimary} onClick={props.handleConfirm}>{props.closeLable}</button>
+    <button id="confirmOk" className={styles.buttonPrimary} onClick={props.handleConfirm}>{props.closeLable}</button>
     <button className={styles.buttonPrimary} onClick={props.handleCancel}>{props.cancelLable}</button>
   </ReactModal>
 );

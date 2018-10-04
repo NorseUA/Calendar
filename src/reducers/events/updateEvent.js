@@ -11,7 +11,7 @@ const initialState = {
   error: null
 };
 
-export default function updateEvent(state = initialState, action) {
+export default function updateEvent(state = initialState, action = {}) {
   switch (action.type) {
     case UPDATE_EVENT_PENDING: {
       return {

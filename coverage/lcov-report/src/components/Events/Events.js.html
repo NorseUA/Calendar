@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/Events/Events.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\index.html">All files</a> / <a href="index.html">src/components/Events</a> Events.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">71.7% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>38/53</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.23% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>27/39</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>10/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">71.15% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>37/52</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import eventsFormValidation from './helpers/eventsFormValidation';
+import { getSelectBlockOptions, renderSelectBlocks } from './helpers/renderSelectBlocks';
+import NameInput from './helpers/NameInput';
+import SaveModal from '../Modals/SaveModal';
+import ConfirmModal from '../Modals/ConfirmModal';
+import { getEventValues, createNewEvent } from './helpers/eventsHelpers';
+import * as styles from './Events.scss';
+import * as eventActions from '../../actions/EventActions';
+import { months } from '../../constants';
+&nbsp;
+&nbsp;
+export class Event extends Component {
+  componentDidMount() {
+    console.log('Welcome');
+  }
+&nbsp;
+  getMessageLabel = () =&gt; {
+    const {
+      addPending,
+      removePending,
+      updatePending,
+      addReceived,
+      removeReceived,
+      updateReceived
+    } = this.props;
+    switch (true) {
+<span class="branch-0 cbranch-no" title="branch not covered" >      case (addPending): {</span>
+<span class="cstat-no" title="statement not covered" >        return 'Adding new event...';</span>
+      }
+<span class="branch-1 cbranch-no" title="branch not covered" >      case (removePending): {</span>
+<span class="cstat-no" title="statement not covered" >        return 'Removing event...';</span>
+      }
+      case (updatePending): {
+        return 'Updating event...';
+      }
+<span class="branch-3 cbranch-no" title="branch not covered" >      case (addReceived): {</span>
+<span class="cstat-no" title="statement not covered" >        return 'You\'ve successfully added event';</span>
+      }
+      case (updateReceived): {
+        return 'You\'ve successfully updated event';
+      }
+<span class="branch-5 cbranch-no" title="branch not covered" >      case (removeReceived): {</span>
+<span class="cstat-no" title="statement not covered" >        return 'You\'ve successfully removed event';</span>
+      }
+<span class="branch-6 cbranch-no" title="branch not covered" >      default: <span class="cstat-no" title="statement not covered" >return 'Something wrong, try again :(';</span></span>
+    }
+  }
+&nbsp;
+  returnToPreviousPage = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+    const { history } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+<span class="cstat-no" title="statement not covered" >    history.goBack();</span>
+  }
+&nbsp;
+  formOnSubmit = <span class="fstat-no" title="function not covered" >(v</span>alues) =&gt; {
+    const { events, id, eventId } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+    const { updateEvent, addEvent } = <span class="cstat-no" title="statement not covered" >this.props.eventActions;</span>
+    const eventValues = <span class="cstat-no" title="statement not covered" >getEventValues(events, id);</span>
+<span class="cstat-no" title="statement not covered" >    if (eventValues) {</span>
+      const newEvent = <span class="cstat-no" title="statement not covered" >createNewEvent(values, id);</span>
+<span class="cstat-no" title="statement not covered" >      updateEvent(newEvent);</span>
+    } else {
+      const newEvent = <span class="cstat-no" title="statement not covered" >createNewEvent(values, eventId);</span>
+<span class="cstat-no" title="statement not covered" >      addEvent(newEvent);</span>
+    }
+  };
+&nbsp;
+  deleteEvent = () =&gt; {
+    const { id } = this.props;
+    const { removeEvent, setConfirmModalState } = this.props.eventActions;
+    setConfirmModalState(false);
+    removeEvent(id);
+  };
+&nbsp;
+  closeConfirmModal = () =&gt; {
+    const { setConfirmModalState } = this.props.eventActions;
+    const { history } = this.props;
+    setConfirmModalState(false);
+    history.goBack();
+  };
+&nbsp;
+  showMessage = () =&gt; {
+    const {
+      addPending,
+      removePending,
+      updatePending,
+      addReceived,
+      removeReceived,
+      updateReceived,
+      addError,
+      removeError,
+      updateError
+    } = this.props;
+    const label = this.getMessageLabel();
+    if (addPending || removePending || updatePending) {
+      return (&lt;div&gt;{label}&lt;/div&gt;);
+    }
+    return (&lt;SaveModal
+      isOpen={addReceived || removeReceived || updateReceived || <span class="branch-3 cbranch-no" title="branch not covered" >addError </span>|| <span class="branch-4 cbranch-no" title="branch not covered" >removeError </span>|| <span class="branch-5 cbranch-no" title="branch not covered" >updateError}</span>
+      popupText={label}
+      closeLable={'Ok'}
+      handleConfirm={this.returnToPreviousPage}
+    /&gt;);
+  }
+&nbsp;
+  render() {
+    const {
+      pageName,
+      resetName,
+      submitName,
+      id,
+      reset,
+      submitting,
+      pristine,
+      confirmIsOpen,
+      addPending,
+      removePending,
+      updatePending,
+      addReceived,
+      removeReceived,
+      updateReceived,
+      addError,
+      removeError,
+      updateError
+    } = this.props;
+    const { setConfirmModalState } = this.props.eventActions;
+    const selectOptins = getSelectBlockOptions();
+    if (addPending ||
+      removePending ||
+      updatePending ||
+      addReceived ||
+      removeReceived ||
+      updateReceived ||
+      addError ||
+      removeError ||
+      updateError) {
+      return this.showMessage();
+    }
+    return (
+      &lt;div className={styles.eventWrapper}&gt;
+        &lt;ConfirmModal
+          isOpen={confirmIsOpen}
+          popupText={'Are you sure?'}
+          closeLable={'Yes'}
+          cancelLable={'Cancel'}
+          handleConfirm={this.deleteEvent}
+          handleCancel={this.closeConfirmModal}
+        /&gt;
+        &lt;form
+          onSubmit={this.props.handleSubmit(
+            this.formOnSubmit)}
+        &gt;
+          &lt;div&gt;
+            &lt;div className={styles.header}&gt;
+              &lt;button className={styles.returnButton} onClick={this.returnToPreviousPage}&gt; Back &lt;/button&gt;
+              &lt;div className={styles.eventMainTitle}&gt;{pageName}&lt;/div&gt;
+              &lt;button className={styles.buttonPrimary} type="button" onClick={reset} disabled={pristine || submitting} &gt;
+                {resetName}
+              &lt;/button&gt;
+            &lt;/div&gt;
+            &lt;label htmlFor="eventName" className={styles.eventTitle}&gt;Event name&lt;/label&gt;
+            &lt;div className={styles.eventNameInput}&gt;
+              &lt;Field
+                name="name"
+                type="text"
+                component={NameInput}
+              /&gt;
+            &lt;/div&gt;
+            {renderSelectBlocks(selectOptins)}
+            &lt;label htmlFor="description" className={styles.eventTitle}&gt;Description&lt;/label&gt;
+            &lt;div className={styles.eventDescription}&gt;
+              &lt;Field name="description" component="textarea" placeholder="Event description" id="description" /&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;button id="submitButton" className={cx(id &gt;= 0 ? styles.buttonUpdate : <span class="branch-1 cbranch-no" title="branch not covered" >styles.buttonSubmit)</span>} type="submit" disabled={pristine || submitting}&gt;{submitName}&lt;/button&gt;
+          &lt;button id="delete" className={cx(id &gt;= 0 ? styles.buttonDelete : <span class="branch-1 cbranch-no" title="branch not covered" >styles.buttonHidden)</span>} type="button" onClick={() =&gt; setConfirmModalState(true)}&gt;delete&lt;/button&gt;
+        &lt;/form &gt;
+      &lt;/div&gt;
+    );
+  }
+}
+&nbsp;
+Event.propTypes = {
+  id: PropTypes.number,
+  addEvent: PropTypes.func,
+  events: PropTypes.array,
+  eventId: PropTypes.number,
+  pageName: PropTypes.string,
+  resetName: PropTypes.string,
+  submitName: PropTypes.string,
+  eventActions: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func,
+  reset: PropTypes.func,
+  pristine: PropTypes.bool,
+  submitting: PropTypes.bool,
+  confirmIsOpen: PropTypes.bool,
+  addReceived: PropTypes.bool,
+  addError: PropTypes.bool,
+  addPending: PropTypes.bool,
+  removeReceived: PropTypes.bool,
+  removeError: PropTypes.bool,
+  removePending: PropTypes.bool,
+  updateReceived: PropTypes.bool,
+  updateError: PropTypes.bool,
+  updatePending: PropTypes.bool,
+  history: PropTypes.object
+};
+&nbsp;
+const mapStateToProps = (state, ownProps) =&gt; {
+  console.log('state', state);
+  console.log('ownProps', ownProps);
+  const newDay = Number(ownProps.match.params.day);
+  const newYear = Number(ownProps.match.params.year);
+  const newMonth = months.find(month =&gt; month === ownProps.match.params.month);
+  const number = months.indexOf(newMonth);
+  const currentId = Number(ownProps.match.params.eventId);
+  const values = getEventValues(state.getEvents.events, Number(ownProps.match.params.eventId), months);
+  return {
+    year: newYear,
+    day: newDay,
+    month: number,
+    id: currentId,
+    events: state.getEvents.events,
+    initialValues: values,
+    eventId: state.getEvents.eventId,
+    confirmIsOpen: state.confirmModal.confirmIsOpen,
+    errorIsOpen: state.getEvents.errorIsOpen,
+    addPending: state.addEvent.pending,
+    addReceived: state.addEvent.received,
+    addError: state.addEvent.error,
+    removePending: state.removeEvent.pending,
+    removeReceived: state.removeEvent.received,
+    removeError: state.removeEvent.error,
+    updatePending: state.updateEvent.pending,
+    updateReceived: state.updateEvent.received,
+    updateError: state.updateEvent.error,
+    history: ownProps.history
+  };
+};
+&nbsp;
+function mapDispatchToProps(dispatch) {
+  return {
+    eventActions: bindActionCreators(eventActions, dispatch)
+  };
+}
+&nbsp;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(reduxForm({
+  form: 'event',
+  validate: eventsFormValidation
+})(Event));
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 14 2017 15:14:38 GMT+0300 (RTZ 2 (зима))
+</div>
+</div>
+<script src="..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\sorter.js"></script>
+</body>
+</html>

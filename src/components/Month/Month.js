@@ -17,7 +17,7 @@ import {
 } from './getOptions';
 import { months } from '../../constants';
 
-class Month extends Component {
+export class Month extends Component {
   componentDidMount() {
     const { getEvents } = this.props.eventActions;
     const { events } = this.props;
@@ -43,7 +43,7 @@ class Month extends Component {
             <Link to={{ pathname: `/${year}` }}>
               <button className={styles.returnButton}> Back to year</button>
             </Link>
-            {months[month]}, {year}
+            <span>{months[month]}, {year}</span>
             <Link to={{ pathname: `/${year}/${months[month]}/${day}/${event}` }}>
               <button className={styles.addButton}> + </button>
             </Link>
@@ -59,8 +59,8 @@ class Month extends Component {
             </div>
           </div>
           <div className={styles.footer}>
-            <button onClick={() => setPreviousMonth(year, setMonth, setYear, month, history)}> prev </button>
-            <button onClick={() => setNextMonth(year, setMonth, setYear, month, history)}> next </button>
+            <button id="monthPrev" onClick={() => setPreviousMonth(year, setMonth, setYear, month, history)}> prev </button>
+            <button id="monthNext" onClick={() => setNextMonth(year, setMonth, setYear, month, history)}> next </button>
           </div>
         </div>
       );

@@ -15,7 +15,7 @@ import * as eventActions from '../../actions/EventActions';
 import { months } from '../../constants';
 
 
-class Event extends Component {
+export class Event extends Component {
   componentDidMount() {
     console.log('Welcome');
   }
@@ -52,44 +52,36 @@ class Event extends Component {
     }
   }
 
-  addNewEvent = (event) => {
-    const { eventId } = this.props;
-    const { addEvent } = this.props.eventActions;
-    const newEvent = createNewEvent(event, eventId);
-    addEvent(newEvent);
-  }
-
-  updateGivenEvent = (values) => {
-    const { id } = this.props;
-    const { updateEvent } = this.props.eventActions;
-    const newEvent = createNewEvent(values, id);
-    updateEvent(newEvent);
-  }
-
   returnToPreviousPage = () => {
-    history.back();
+    const { history } = this.props;
+    history.goBack();
   }
 
   formOnSubmit = (values) => {
-    const { events, id } = this.props;
+    const { events, id, eventId } = this.props;
+    const { updateEvent, addEvent } = this.props.eventActions;
     const eventValues = getEventValues(events, id);
-    return eventValues ?
-      this.updateGivenEvent(values) :
-      this.addNewEvent(values);
+    if (eventValues) {
+      const newEvent = createNewEvent(values, id);
+      updateEvent(newEvent);
+    } else {
+      const newEvent = createNewEvent(values, eventId);
+      addEvent(newEvent);
+    }
   };
 
   deleteEvent = () => {
     const { id } = this.props;
-    const { removeEvent } = this.props.eventActions;
-    const { setConfirmModalState } = this.props.eventActions;
+    const { removeEvent, setConfirmModalState } = this.props.eventActions;
     setConfirmModalState(false);
     removeEvent(id);
   };
 
   closeConfirmModal = () => {
     const { setConfirmModalState } = this.props.eventActions;
+    const { history } = this.props;
     setConfirmModalState(false);
-    history.back();
+    history.goBack();
   };
 
   showMessage = () => {
@@ -160,8 +152,8 @@ class Event extends Component {
           handleCancel={this.closeConfirmModal}
         />
         <form
-          onSubmit={this.props.handleSubmit(values =>
-            this.formOnSubmit(values))}
+          onSubmit={this.props.handleSubmit(
+            this.formOnSubmit)}
         >
           <div>
             <div className={styles.header}>
@@ -185,8 +177,8 @@ class Event extends Component {
               <Field name="description" component="textarea" placeholder="Event description" id="description" />
             </div>
           </div>
-          <button className={cx(id >= 0 ? styles.buttonUpdate : styles.buttonSubmit)} type="submit" disabled={pristine || submitting}>{submitName}</button>
-          <button className={cx(id >= 0 ? styles.buttonDelete : styles.buttonHidden)} type="button" onClick={() => setConfirmModalState(true)}>delete</button>
+          <button id="submitButton" className={cx(id >= 0 ? styles.buttonUpdate : styles.buttonSubmit)} type="submit" disabled={pristine || submitting}>{submitName}</button>
+          <button id="delete" className={cx(id >= 0 ? styles.buttonDelete : styles.buttonHidden)} type="button" onClick={() => setConfirmModalState(true)}>delete</button>
         </form >
       </div>
     );
@@ -194,7 +186,7 @@ class Event extends Component {
 }
 
 Event.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   addEvent: PropTypes.func,
   events: PropTypes.array,
   eventId: PropTypes.number,
@@ -215,21 +207,26 @@ Event.propTypes = {
   removePending: PropTypes.bool,
   updateReceived: PropTypes.bool,
   updateError: PropTypes.bool,
-  updatePending: PropTypes.bool
+  updatePending: PropTypes.bool,
+  history: PropTypes.object
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log('state', state);
+  console.log('ownProps', ownProps);
   const newDay = Number(ownProps.match.params.day);
+  const newYear = Number(ownProps.match.params.year);
   const newMonth = months.find(month => month === ownProps.match.params.month);
   const number = months.indexOf(newMonth);
   const currentId = Number(ownProps.match.params.eventId);
+  const values = getEventValues(state.getEvents.events, Number(ownProps.match.params.eventId), months);
   return {
-    year: state.year.year,
+    year: newYear,
     day: newDay,
     month: number,
     id: currentId,
     events: state.getEvents.events,
-    initialValues: getEventValues(state.getEvents.events, Number(ownProps.match.params.eventId), months),
+    initialValues: values,
     eventId: state.getEvents.eventId,
     confirmIsOpen: state.confirmModal.confirmIsOpen,
     errorIsOpen: state.getEvents.errorIsOpen,
@@ -241,7 +238,8 @@ const mapStateToProps = (state, ownProps) => {
     removeError: state.removeEvent.error,
     updatePending: state.updateEvent.pending,
     updateReceived: state.updateEvent.received,
-    updateError: state.updateEvent.error
+    updateError: state.updateEvent.error,
+    history: ownProps.history
   };
 };
 

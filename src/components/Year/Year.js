@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { v4 } from 'node-uuid';
-import * as styles from './Year.scss';
 import MonthBody from '../Month/MonthBody';
 import * as yearActions from '../../actions/YearActions';
 import * as monthActions from '../../actions/MonthActions';
 import * as eventActions from '../../actions/EventActions';
 import { months } from '../../constants';
+import * as styles from './Year.scss';
 
-class Year extends Component {
+export class Year extends Component {
   componentDidMount() {
     const { getEvents } = this.props.eventActions;
     const { events } = this.props;
@@ -34,19 +34,18 @@ class Year extends Component {
     history.push(yearForHistory);
   }
 
-  setMonth = (item, index) => {
-    const { setMonth } = this.props.monthActions;
-    setMonth(index);
-  }
+
   getMonths = () => months.map((item, index) => {
     const { year, events } = this.props;
+    const { setMonth } = this.props.monthActions;
     return (
       <div className={styles.monthWrapper} key={v4()}>
         <Link
           to={{ pathname: `/${year}/${item}` }}
           className={styles.title}
           key={v4()}
-          onClick={() => this.setMonth(item, index)}
+          id={`${item}Year`}
+          onClick={() => setMonth(index)}
         >
           {item}
         </Link>
@@ -67,9 +66,9 @@ class Year extends Component {
       return (
         <div className={styles.year}>
           <div className={styles.title}>
-            <button onClick={this.setPreviousYear}> prev </button>
-            {year}
-            <button onClick={this.setNextYear}> next </button>
+            <button id="yearPrev" onClick={this.setPreviousYear}> prev </button>
+            <span>{year}</span>
+            <button id="yearNext" onClick={this.setNextYear}> next </button>
           </div>
           <div className={styles.yearBody}>
             {this.getMonths()}
@@ -94,7 +93,6 @@ Year.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
   const newYear = Number(ownProps.match.params.year);
   return {
     year: newYear,

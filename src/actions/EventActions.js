@@ -18,8 +18,8 @@ import {
   UPDATE_GENERAL_EVENTS,
   UPDATE_GENERAL_EVENTS_ID
 } from '../constants/Events';
-import { loadState, saveState } from '../localStorage';
-import mockRequest from './helper';
+import { loadState, saveState } from '../services/localStorage';
+import mockRequest from '../services/mockRequest';
 import store from '../index';
 
 const getState = () => {
@@ -30,11 +30,11 @@ const getState = () => {
 export function addEvent(event) {
   return (dispatch) => {
     dispatch({ type: ADD_EVENT_PENDING });
-    mockRequest().then(() => {
+    return mockRequest().then(() => {
       const state = getState();
-      const newEvents = state.getEvents.events;
-      const id = state.getEvents.eventId;
-      newEvents.push(event);
+      const persistedEvents = state.getEvents.events;
+      const newEvents = persistedEvents.map(item => ({ ...item, event: { ...item.event } })).concat(event);
+      const id = state.getEvents.eventId + 1;
       dispatch({ type: UPDATE_GENERAL_EVENTS, payload: newEvents });
       dispatch({ type: UPDATE_GENERAL_EVENTS_ID, payload: id });
       saveState(store.getState());
@@ -49,8 +49,10 @@ export function addEvent(event) {
 export function removeEvent(id) {
   return (dispatch) => {
     dispatch({ type: REMOVE_EVENT_PENDING });
-    mockRequest().then(() => {
-      const newEvents = getState().getEvents.events;
+    return mockRequest().then(() => {
+      const state = getState();
+      const persistedEvents = state.getEvents.events;
+      const newEvents = persistedEvents.map(item => ({ ...item, event: { ...item.event } }));
       const index = newEvents.findIndex(event => event.id === id);
       newEvents.splice(index, 1);
       dispatch({ type: UPDATE_GENERAL_EVENTS, payload: newEvents });
@@ -68,11 +70,14 @@ export function removeEvent(id) {
 export function updateEvent(newEvent) {
   return (dispatch) => {
     dispatch({ type: UPDATE_EVENT_PENDING });
-    mockRequest().then(() => {
-      const newEvents = getState().getEvents.events;
-      newEvents.forEach((event, index) => {
-        if (event.id === newEvent.id) {
-          newEvents[index] = newEvent;
+    return mockRequest().then(() => {
+      const state = getState();
+      const persistedEvents = state.getEvents.events;
+      const newEvents = persistedEvents.map((item) => {
+        if (item.id === newEvent.id) {
+          return newEvent;
+        } else { // eslint-disable-line
+          return ({ ...item, event: { ...item.event } });
         }
       });
       dispatch({ type: UPDATE_GENERAL_EVENTS, payload: newEvents });
@@ -85,10 +90,11 @@ export function updateEvent(newEvent) {
   };
 }
 
-export function getEvents(events) {
+
+export function getEvents() {
   return (dispatch) => {
-    dispatch({ type: GET_EVENTS_PENDING, payload: events });
-    mockRequest().then(() => {
+    dispatch({ type: GET_EVENTS_PENDING });
+    return mockRequest().then(() => {
       const newState = loadState() || store.getState();
       const newEvents = newState.getEvents.events;
       dispatch({ type: ADD_EVENT_RETURN_TO_INITIAL_STATE });
@@ -101,7 +107,6 @@ export function getEvents(events) {
       });
   };
 }
-
 
 export function setConfirmModalState(state) {
   return {

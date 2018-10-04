@@ -8,19 +8,22 @@ import {
   renderWeekDay
 } from './getOptions';
 
-
-const MonthBody = ({ month, year, events }) =>
-  (<div className={styles.monthBodyFullView}>
+const MonthBody = ({ month, year, events }) => {
+  const previousMonthDays = renderPreviousMonthDays(year, month, events);
+  const constNextMonthDays = renderCurrentMonthDays(year, month, events);
+  const nextMonthDays = renderNextMonthDays(year, month, events);
+  return (<div className={styles.monthBodyFullView}>
     <div className={styles.weekDaysWrapper}>
       {renderWeekDay(year, month, events)}
     </div>
     <div className={styles.day}>
-      {renderPreviousMonthDays(year, month, events)}
-      {renderCurrentMonthDays(year, month, events)}
-      {renderNextMonthDays(year, month, events)}
+      {previousMonthDays}
+      {constNextMonthDays}
+      {nextMonthDays}
     </div>
   </div>
   );
+};
 
 
 MonthBody.propTypes = {

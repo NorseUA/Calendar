@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import * as styles from './Day.scss';
 import { months } from '../../constants';
 
-const getDayEvents = (year, month, day, events) => {
+export const getDayEvents = (year, month, day, events) => {
   const dayEvents = [];
   const date = moment([year, month, day]);
   for (let i = 0; i < events.length; i++) {
@@ -47,7 +47,7 @@ const renderDayBody = (year, month, day, events) => {
     const sortedDayEvents = sortDayEvents(dayEvents);
     return renderEvents(sortedDayEvents, year, month, day);
   }
-  return dayEvents.length ? dayEvents : (<div className={styles.eventName}>You do not have any planned events</div>);
+  return (<div className={styles.eventName}>You do not have any planned events</div>);
 };
 
 export default renderDayBody;
